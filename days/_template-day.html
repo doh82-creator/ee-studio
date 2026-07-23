@@ -1,0 +1,54 @@
+<!-- ============================================================
+     TEMPLATE — copy this file to /days/ as dayN.html for a new day.
+     Then: 1) add its handout/form <div class="h-item"> rows below
+           2) unlock its card in ../index.html (remove class="locked", set href)
+     ============================================================ -->
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Day [N] — [Day Title]</title>
+<link rel="stylesheet" href="../assets/site.css">
+</head>
+<body>
+  <div class="topbar">
+    <div class="brand"><a href="../index.html">EE Research Studio</a></div>
+    <div class="crumb"><a href="../index.html">Home</a> / Day [N]</div>
+  </div>
+
+  <div class="wrap">
+    <div class="hero">
+      <div class="kicker">Day [N] · [Phase]</div>
+      <h1>[Day Title]</h1>
+      <p>[One or two sentences describing today's session.]</p>
+    </div>
+
+    <div class="section-label">열람 &amp; 인쇄용 유인물</div>
+    <div class="h-list">
+      <div class="h-item">
+        <div class="h-icon view">1</div>
+        <div class="h-body">
+          <div class="h-title">[Handout Title]</div>
+          <div class="h-desc">[One-line description]</div>
+        </div>
+        <div class="h-actions"><a class="primary" href="../handouts/dayN-1-name.html" target="_blank">보기 / 인쇄</a></div>
+      </div>
+    </div>
+
+    <div class="section-label">과제 유인물 — 온라인 작성</div>
+    <div class="h-list">
+      <div class="h-item">
+        <div class="h-icon write">2</div>
+        <div class="h-body">
+          <div class="h-title">[Form Title] <span style="color:#8B2E2E;">(Homework — Due Day [N+1])</span></div>
+          <div class="h-desc">[One-line description]</div>
+        </div>
+        <div class="h-actions"><a class="write-btn" href="../forms/dayN-2-name.html">작성하기</a></div>
+      </div>
+    </div>
+  </div>
+
+  <footer class="site-footer">EE Research Studio · Day [N] of 10</footer>
+</body>
+</html>

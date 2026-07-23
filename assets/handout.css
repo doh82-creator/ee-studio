@@ -1,0 +1,62 @@
+/* ==========================================================
+   EE Research Studio — shared handout design system
+   Edit this file to restyle ALL view/print handouts at once.
+   Page-specific classes (tables, checklists, etc.) stay in
+   each handout's own <style> block — only shared chrome lives here.
+   ========================================================== */
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@500;700;900&display=swap');
+
+:root{
+  --ink:#0848A0; --ink-soft:#4C6FA0; --paper:#F2F6FB; --card:#FFFFFF;
+  --accent:#0078C0; --accent-soft:#BFE0F2; --forest:#20B0E8;
+  --line:#CBDCEA; --line-strong:#9FBFDA; --text:#16233A;
+}
+*{box-sizing:border-box;}
+body{background:var(--paper); margin:0; padding:40px 20px; font-family:-apple-system,BlinkMacSystemFont,"Noto Sans KR","Malgun Gothic","Apple SD Gothic Neo",sans-serif; color:var(--text); word-break:keep-all; overflow-wrap:break-word;}
+
+/* site navigation bar (hidden when printing) */
+.site-topbar{background:var(--ink); color:#fff; padding:13px 24px; display:flex; align-items:center; justify-content:space-between; margin:-40px -20px 40px;}
+.site-topbar .brand{font-family:'Noto Sans KR',sans-serif; font-weight:700; font-size:15px;}
+.site-topbar a{color:#BFE0F2; text-decoration:none; font-size:13px;}
+.site-topbar a:hover{text-decoration:underline;}
+@media print{ .site-topbar{display:none;} }
+
+/* the printable card itself */
+.sheet{max-width:800px; margin:0 auto; background:var(--card); border:1px solid var(--line); box-shadow:0 1px 3px rgba(8,72,160,.08); padding:52px 58px; position:relative;}
+
+/* circular "stamp" badge (Handout N of 5) */
+.stamp{position:absolute; top:40px; right:52px; width:88px; height:88px; border:2px solid var(--accent); border-radius:50%;
+  display:flex; flex-direction:column; align-items:center; justify-content:center; transform:rotate(-8deg); color:var(--accent); font-family:'Noto Sans KR',sans-serif;}
+.stamp.forest{border-color:var(--forest); color:var(--forest);}
+.stamp .num{font-size:24px; font-weight:900; line-height:1;}
+.stamp .lbl{font-size:8px; letter-spacing:1px; text-transform:uppercase; margin-top:3px;}
+
+/* masthead / title block */
+.masthead{border-bottom:3px double var(--ink); padding-bottom:14px; margin-bottom:26px; padding-right:100px;}
+.program{font-size:12px; letter-spacing:2.5px; text-transform:uppercase; color:var(--accent); font-weight:700; margin-bottom:7px;}
+h1{font-family:'Noto Sans KR',sans-serif; font-weight:900; font-size:32px; margin:0 0 7px; color:var(--ink); line-height:1.25; letter-spacing:-.3px;}
+.sub{font-size:14.5px; color:var(--ink-soft); letter-spacing:.2px;}
+
+/* intro / lede callout */
+.lede{font-size:16px; line-height:1.75; margin:22px 0 26px; padding:16px 20px; background:#EEF6FB; border-left:3px solid var(--forest);}
+
+/* section headers used throughout every handout */
+.section-title{font-family:'Noto Sans KR',sans-serif; font-weight:700; font-size:16px; text-transform:uppercase; letter-spacing:1.2px; color:var(--accent);
+  border-bottom:1px solid var(--line-strong); padding-bottom:8px; margin:32px 0 15px;}
+
+/* generic table styling reused by every worksheet */
+table{width:100%; border-collapse:collapse; font-size:13.5px;}
+th{background:var(--ink); color:#fff; text-align:left; padding:10px 11px; font-weight:700; font-size:11.5px; text-transform:uppercase; letter-spacing:.4px;}
+td{padding:10px 11px; border-bottom:1px solid var(--line); vertical-align:top; line-height:1.55;}
+tr:nth-child(even) td{background:#F5FAFD;}
+
+/* fill-in lines for handwritten answers */
+.writeline{border-bottom:1px solid var(--line-strong); height:26px; margin-bottom:2px;}
+.fill{border-bottom:1px solid var(--ink-soft); display:block; min-height:36px;}
+
+/* footer */
+.footer{margin-top:32px; padding-top:14px; border-top:1px solid var(--line); font-size:11px; color:var(--ink-soft);
+  display:flex; justify-content:space-between; letter-spacing:.5px; text-transform:uppercase;}
+
+@page{size:A4; margin:14mm;}
+@media print{ body{padding:0; background:#fff;} .sheet{box-shadow:none; border:none; max-width:100%;} }

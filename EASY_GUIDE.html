@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>아주 쉬운 배포 가이드 — 하나씩 따라하기</title>
+<style>
+  :root{ --ink:#0848A0; --ink-soft:#4C6FA0; --paper:#F2F6FB; --accent:#0078C0; --forest:#20B0E8; --line:#CBDCEA; }
+  *{box-sizing:border-box;}
+  body{background:var(--paper); margin:0; font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","Noto Sans KR",sans-serif; color:#16233A; padding:30px 16px 90px;}
+  .wrap{max-width:680px; margin:0 auto;}
+  h1{font-family:Georgia,serif; color:var(--ink); font-size:26px; margin-bottom:2px;}
+  .sub{color:var(--ink-soft); font-size:13px; margin-bottom:30px;}
+  .part{background:#fff; border:2px solid var(--line); border-radius:10px; padding:22px 26px; margin-bottom:24px;}
+  .part-title{font-family:Georgia,serif; font-size:19px; color:var(--accent); margin:0 0 4px; display:flex; align-items:center; gap:10px;}
+  .part-title .pn{background:var(--accent); color:#fff; width:30px; height:30px; border-radius:50%; display:inline-flex; align-items:center; justify-content:center; font-size:14px; font-family:-apple-system,sans-serif; flex-shrink:0;}
+  .part-desc{font-size:12.5px; color:var(--ink-soft); margin:0 0 18px; padding-left:40px;}
+  .step{display:flex; gap:14px; padding:14px 0; border-top:1px dashed var(--line);}
+  .step:first-of-type{border-top:none;}
+  .sn{width:26px; height:26px; border-radius:50%; border:2px solid var(--ink); color:var(--ink); display:flex; align-items:center; justify-content:center; font-size:12px; font-weight:700; flex-shrink:0; margin-top:1px;}
+  .stext{font-size:13.5px; line-height:1.75;}
+  .stext b{color:var(--ink);}
+  .btn{display:inline-block; background:var(--ink); color:#fff; padding:1px 9px; border-radius:4px; font-size:12px; font-weight:600;}
+  .shot{background:#EAF1F8; border:1px dashed var(--line); border-radius:6px; padding:10px 14px; font-size:11.5px; color:var(--ink-soft); margin-top:8px; font-style:italic;}
+  .tip{background:#E3F3FB; border-left:3px solid var(--forest); padding:10px 14px; font-size:12px; margin-top:10px; border-radius:0 5px 5px 0;}
+  .warn{background:#EAF5FB; border-left:3px solid var(--accent); padding:10px 14px; font-size:12px; margin-top:10px; border-radius:0 5px 5px 0;}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <h1>아주 쉬운 배포 가이드</h1>
+  <div class="sub">하나도 몰라도 따라할 수 있게 — 순서대로 클릭만 하면 됩니다</div>
+
+  <div class="part">
+    <div class="part-title"><span class="pn">A</span>GitHub에 내 사이트 폴더 올리기</div>
+    <div class="part-desc">GitHub은 내 파일을 인터넷에 올려두는 "클라우드 폴더"라고 생각하면 됩니다.</div>
+
+    <div class="step"><div class="sn">1</div><div class="stext">
+      브라우저에서 <b>github.com</b> 접속 → 오른쪽 위 <span class="btn">Sign up</span> 클릭 → 이메일, 비밀번호로 계정 만들기
+      <div class="tip">이미 계정이 있다면 이 단계는 건너뛰고 <span class="btn">Sign in</span>으로 로그인하세요.</div>
+    </div></div>
+
+    <div class="step"><div class="sn">2</div><div class="stext">
+      로그인 후 화면 오른쪽 위에 <b>+</b> 모양 아이콘 클릭 → 나오는 목록에서 <b>New repository</b> 클릭
+      <div class="shot">화면 예시: 오른쪽 위에 동그라미(내 프로필 사진) 바로 왼쪽에 + 아이콘이 있어요.</div>
+    </div></div>
+
+    <div class="step"><div class="sn">3</div><div class="stext">
+      <b>Repository name</b> 칸에 <code>ee-studio</code> 입력 (이름은 원하는대로 바꿔도 됩니다)
+      → 화면 아래쪽 <b>Public</b>이 선택되어 있는지 확인 → 맨 아래 초록 버튼 <span class="btn">Create repository</span> 클릭
+    </div></div>
+
+    <div class="step"><div class="sn">4</div><div class="stext">
+      새로 만들어진 빈 페이지에서 <b>uploading an existing file</b>이라는 파란 글씨 링크를 클릭
+      (또는 <span class="btn">Add file</span> 버튼 → <b>Upload files</b>)
+    </div></div>
+
+    <div class="step"><div class="sn">5</div><div class="stext">
+      제가 드린 <code>ee-studio</code> 압축을 먼저 풀어두세요 (마우스 오른쪽 클릭 → 압축 풀기).
+      그 안에 있는 <b>모든 파일과 폴더를 한 번에 선택</b>해서, 화면 가운데 점선 박스 안으로 <b>마우스로 끌어다 놓기(드래그)</b> 하세요.
+      <div class="shot">화면 예시: "Drag files here to add them to your repository" 라는 문구가 쓰인 큰 회색 점선 박스가 보일 거예요.</div>
+    </div></div>
+
+    <div class="step"><div class="sn">6</div><div class="stext">
+      파일이 다 올라간 걸 확인했으면, 맨 아래로 스크롤 → 초록 버튼 <span class="btn">Commit changes</span> 클릭
+      <div class="tip">"Commit"은 그냥 "저장하기" 버튼이라고 생각하면 됩니다.</div>
+    </div></div>
+  </div>
+
+  <div class="part">
+    <div class="part-title"><span class="pn">B</span>주소(URL) 하나만 바꿔 끼우기</div>
+    <div class="part-desc">app.js 안에 있는 "여기에 주소를 붙여넣으세요"라고 써진 부분을, 진짜 주소로 바꾸는 작업입니다. 별도 프로그램 없이 GitHub 화면에서 바로 합니다.</div>
+
+    <div class="step"><div class="sn">1</div><div class="stext">
+      방금 올린 저장소 화면에서 <b>assets</b> 폴더 클릭 → 그 안의 <b>app.js</b> 파일 클릭
+    </div></div>
+
+    <div class="step"><div class="sn">2</div><div class="stext">
+      화면 오른쪽 위에 <b>연필 모양 아이콘</b>(수정하기)을 클릭
+      <div class="shot">화면 예시: 파일 내용 오른쪽 위, 연필 그림 아이콘이에요. 안 보이면 화면을 조금 넓게 키워보세요.</div>
+    </div></div>
+
+    <div class="step"><div class="sn">3</div><div class="stext">
+      화면에 나온 글자들 중에서 <code>PASTE_YOUR_APPS_SCRIPT_WEB_APP_URL_HERE</code> 라는 부분을 찾아서,
+      마우스로 그 글자만 드래그해서 선택 → 미리 복사해둔 Apps Script 주소(<code>.../exec</code>로 끝나는 긴 주소)를 붙여넣기(키보드 <b>Ctrl+V</b>, 맥은 <b>Cmd+V</b>)
+      <div class="warn">따옴표(" ") 안의 <b>글자만</b> 바뀌어야 합니다. 따옴표 자체는 지우지 마세요.<br>
+      예: <code>"PASTE_YOUR_..._HERE"</code> → <code>"https://script.google.com/macros/s/.../exec"</code></div>
+    </div></div>
+
+    <div class="step"><div class="sn">4</div><div class="stext">
+      화면 아래쪽(또는 오른쪽 위)의 초록 버튼 <span class="btn">Commit changes</span> 클릭 → 다시 한번 <span class="btn">Commit changes</span> 클릭해서 저장
+    </div></div>
+  </div>
+
+  <div class="part">
+    <div class="part-title"><span class="pn">C</span>사이트 주소 만들기 (GitHub Pages 켜기)</div>
+
+    <div class="step"><div class="sn">1</div><div class="stext">
+      저장소 맨 위 메뉴에서 <b>Settings</b> 클릭 (톱니바퀴 아이콘일 수도 있어요)
+    </div></div>
+
+    <div class="step"><div class="sn">2</div><div class="stext">
+      왼쪽 메뉴 목록에서 아래쪽에 있는 <b>Pages</b> 클릭
+    </div></div>
+
+    <div class="step"><div class="sn">3</div><div class="stext">
+      "Branch" 라고 써진 드롭다운(선택 상자)을 클릭 → <b>main</b> 선택 → 옆에 있는 <b>Save</b> 버튼 클릭
+    </div></div>
+
+    <div class="step"><div class="sn">4</div><div class="stext">
+      1~2분 기다렸다가 같은 페이지를 새로고침(F5) 하세요. 초록색 박스로 <b>"Your site is live at..."</b> 라는 문구와 함께
+      주소가 나타납니다. 그 주소가 바로 학생들에게 보낼 사이트 링크예요.
+      <div class="tip">형식: <code>https://[내아이디].github.io/ee-studio/</code></div>
+    </div></div>
+  </div>
+
+  <div class="part" style="border-color:var(--forest);">
+    <div class="part-title" style="color:var(--forest);"><span class="pn" style="background:var(--forest);">✓</span>막히면 이렇게 해주세요</div>
+    <div class="stext" style="padding-left:0;">
+      어느 단계에서 막혔는지 <b>화면을 캡처(스크린샷)</b>해서 저한테 보여주시면, 그 화면을 보고 바로 다음에 뭘 눌러야 하는지 알려드릴게요.
+      지금까지 해보신 것 중 어디까지 되고 어디서부터 안 되는지만 알려주셔도 충분합니다.
+    </div>
+  </div>
+</div>
+</body>
+</html>

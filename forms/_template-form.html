@@ -1,0 +1,97 @@
+<!-- ============================================================
+     TEMPLATE — copy this file to build a new ONLINE HOMEWORK FORM.
+     1. Duplicate into /forms/ as e.g. day2-3-yourname.html
+     2. Change DAY and FORM_ID constants in the script below (FORM_ID must be unique)
+     3. Build your fields with data-field="..." attributes so collectData()/populateData() find them automatically
+     4. Link it from the relevant /days/dayN.html page (use class="write-btn")
+     ============================================================ -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>[Form Title] — Homework</title>
+<link rel="stylesheet" href="../assets/form.css">
+</head>
+<body>
+  <div class="site-topbar">
+    <div class="brand">EE Research Studio</div>
+    <div><a href="../index.html">Home</a> &nbsp;/&nbsp; <a href="../days/dayN.html">Day [N]</a> &nbsp;/&nbsp; [Form Title]</div>
+  </div>
+
+  <div class="wrap">
+  <div class="sheet">
+    <span class="hw-tag">Homework — Due Day [N+1]</span>
+    <h1>[Form Title]</h1>
+    <div class="sub">Day [N] · [Day Title]</div>
+
+    <div class="lede">[One or two sentences framing the task.]</div>
+
+    <div class="code-box">
+      <label for="idInput">학번</label>
+      <input type="text" id="idInput" placeholder="예: 10305" inputmode="numeric" maxlength="6" style="width:90px;">
+      <label for="pinInput">비밀번호 (숫자 4자리)</label>
+      <input type="password" id="pinInput" placeholder="••••" inputmode="numeric" maxlength="4" style="width:70px;">
+      <button id="verifyBtn" type="button">확인</button>
+      <span class="status" id="statusMsg"></span>
+    </div>
+
+    <!-- Example field — repeat this pattern for each question -->
+    <div class="section-title">[Section Heading]</div>
+    <div class="prompt">
+      <div class="p-label">[Question text]</div>
+      <textarea data-field="q1"></textarea>
+    </div>
+
+    <div class="save-row">
+      <button class="save-btn" id="saveBtn">저장하기</button>
+      <span class="save-status" id="saveStatus"></span>
+    </div>
+  </div>
+  </div>
+
+<script src="../assets/app.js"></script>
+<script>
+const DAY = "dayN";           // e.g. "day2" — must match the folder/page this belongs to
+const FORM_ID = "form-id";    // unique per form, e.g. "problem-statement"
+
+function collectData(){
+  const data = {};
+  document.querySelectorAll("[data-field]").forEach(el=> data[el.dataset.field] = el.value);
+  return data;
+}
+function populateData(data){
+  if(!data) return;
+  document.querySelectorAll("[data-field]").forEach(el=>{
+    if(data[el.dataset.field] !== undefined) el.value = data[el.dataset.field];
+  });
+}
+
+const idInput = document.getElementById("idInput");
+const pinInput = document.getElementById("pinInput");
+const savedAuth = ee_getSavedAuth();
+idInput.value = savedAuth.id;
+pinInput.value = savedAuth.pin;
+
+async function doVerifyAndLoad(){
+  const id = idInput.value.trim();
+  const pin = pinInput.value.trim();
+  if(!id || !pin){ ee_setStatus(document.getElementById("statusMsg"), "학번과 비밀번호를 모두 입력해주세요.", true); return; }
+  const result = await ee_verify(id, pin, document.getElementById("statusMsg"));
+  if(result.ok){
+    const data = await ee_loadResponse(DAY, FORM_ID, document.getElementById("statusMsg"));
+    if(data) populateData(data);
+  }
+}
+document.getElementById("verifyBtn").addEventListener("click", doVerifyAndLoad);
+if(savedAuth.id && savedAuth.pin) doVerifyAndLoad();
+
+document.getElementById("saveBtn").addEventListener("click", async ()=>{
+  const { id, pin } = ee_getSavedAuth();
+  if(!id || !pin){ ee_setStatus(document.getElementById("saveStatus"), "먼저 위에서 학번/비밀번호 확인을 눌러주세요.", true); return; }
+  const data = collectData();
+  await ee_saveResponse(DAY, FORM_ID, data, document.getElementById("saveStatus"));
+});
+</script>
+</body>
+</html>

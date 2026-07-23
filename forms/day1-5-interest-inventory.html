@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Curiosity &amp; Interest Inventory — Homework</title>
+<link rel="stylesheet" href="../assets/form.css">
+
+</head>
+<body>
+  <div class="site-topbar">
+    <div class="brand">EE Research Studio</div>
+    <div><a href="../index.html">Home</a> &nbsp;/&nbsp; <a href="../days/day1.html">Day 1</a> &nbsp;/&nbsp; Interest Inventory</div>
+  </div>
+
+  <div class="wrap">
+  <div class="sheet">
+    <span class="hw-tag">Homework — Due Day 2</span>
+    <h1>Curiosity &amp; Interest Inventory</h1>
+    <div class="sub">Day 1 · EE Orientation</div>
+
+    <div class="lede">
+      Good EE topics rarely arrive fully formed — they start as scattered curiosity. This is not a
+      commitment to any topic. Just get your genuine interests down; we'll work with them on Day 2.
+    </div>
+
+    <div class="code-box">
+      <label for="idInput">학번</label>
+      <input type="text" id="idInput" placeholder="예: 10305" inputmode="numeric" maxlength="6" style="width:90px;">
+      <label for="pinInput">비밀번호 (숫자 4자리)</label>
+      <input type="password" id="pinInput" placeholder="••••" inputmode="numeric" maxlength="4" style="width:70px;">
+      <button id="verifyBtn" type="button">확인</button>
+      <span class="status" id="statusMsg"></span>
+    </div>
+    <div class="lede" style="margin-top:-14px; background:none; padding:0 2px; border:none; font-size:11.5px; color:var(--ink-soft);">
+      처음 접속하는 경우, 비밀번호 칸에 원하는 숫자 4자리를 입력하면 그대로 등록됩니다. 이후에는 같은 비밀번호를 입력해야 확인됩니다 — 잊지 않도록 기억해두세요.
+    </div>
+
+    <div class="section-title">1 · Rate Your DP Subjects</div>
+    <table id="subjectTable">
+      <tr><th style="width:32%">Subject</th><th style="width:28%">Interest</th><th style="width:40%">One thing I find interesting</th></tr>
+    </table>
+
+    <div class="section-title">2 · Curiosity Log</div>
+    <div class="prompt">
+      <div class="p-label">Something I've wondered about but never had time to properly explore…</div>
+      <textarea id="curiosity1"></textarea>
+    </div>
+    <div class="prompt">
+      <div class="p-label">A recent article, video, experiment, book, or news story that stuck with me, and why…</div>
+      <textarea id="curiosity2"></textarea>
+    </div>
+    <div class="prompt">
+      <div class="p-label">A real-world problem, debate, or pattern I care about (local or global)…</div>
+      <textarea id="curiosity3"></textarea>
+    </div>
+
+    <div class="section-title">3 · Early Topic Sparks</div>
+    <table id="sparkTable">
+      <tr><th style="width:26%">Possible Subject</th><th style="width:37%">Possible Topic Direction</th><th style="width:37%">Why this interests me</th></tr>
+    </table>
+
+    <div class="save-row">
+      <button class="save-btn" id="saveBtn">저장하기</button>
+      <span class="save-status" id="saveStatus"></span>
+    </div>
+  </div>
+  </div>
+
+<script src="../assets/app.js"></script>
+<script>
+const DAY = "day1";
+const FORM_ID = "interest-inventory";
+
+// --- build the two dynamic tables ---
+const subjectBody = document.getElementById("subjectTable");
+for(let i=0;i<6;i++){
+  const row = document.createElement("tr");
+  row.innerHTML = `
+    <td><input type="text" data-field="subject_name_${i}" placeholder="과목명"></td>
+    <td>
+      <div class="stars" data-star-group="subject_rating_${i}">
+        ${[1,2,3,4,5].map(n=>`
+          <input type="radio" name="subj_${i}" id="s${i}_${n}" value="${n}">
+          <label for="s${i}_${n}" data-star="${n}">★</label>
+        `).join("")}
+      </div>
+    </td>
+    <td><input type="text" data-field="subject_note_${i}" placeholder="흥미로운 점"></td>`;
+  subjectBody.appendChild(row);
+}
+
+const sparkBody = document.getElementById("sparkTable");
+for(let i=0;i<3;i++){
+  const row = document.createElement("tr");
+  row.innerHTML = `
+    <td><input type="text" data-field="spark_subject_${i}"></td>
+    <td><input type="text" data-field="spark_topic_${i}"></td>
+    <td><input type="text" data-field="spark_why_${i}"></td>`;
+  sparkBody.appendChild(row);
+}
+
+// star rating click behavior (fills stars up to clicked one)
+document.querySelectorAll(".stars").forEach(group=>{
+  const labels = [...group.querySelectorAll("label")];
+  group.addEventListener("click", (e)=>{
+    if(e.target.tagName !== "LABEL") return;
+    const val = +e.target.dataset.star;
+    labels.forEach(l=> l.classList.toggle("star-on", +l.dataset.star <= val));
+  });
+});
+
+function collectData(){
+  const data = {};
+  document.querySelectorAll("[data-field]").forEach(el=> data[el.dataset.field] = el.value);
+  document.querySelectorAll(".stars").forEach(group=>{
+    const checked = group.querySelector("input:checked");
+    data[group.dataset.starGroup] = checked ? checked.value : "";
+  });
+  data.curiosity1 = document.getElementById("curiosity1").value;
+  data.curiosity2 = document.getElementById("curiosity2").value;
+  data.curiosity3 = document.getElementById("curiosity3").value;
+  return data;
+}
+
+function populateData(data){
+  if(!data) return;
+  document.querySelectorAll("[data-field]").forEach(el=>{
+    if(data[el.dataset.field] !== undefined) el.value = data[el.dataset.field];
+  });
+  document.querySelectorAll(".stars").forEach(group=>{
+    const val = data[group.dataset.starGroup];
+    if(val){
+      const input = group.querySelector(`input[value="${val}"]`);
+      if(input) input.checked = true;
+      group.querySelectorAll("label").forEach(l=> l.classList.toggle("star-on", +l.dataset.star <= +val));
+    }
+  });
+  if(data.curiosity1) document.getElementById("curiosity1").value = data.curiosity1;
+  if(data.curiosity2) document.getElementById("curiosity2").value = data.curiosity2;
+  if(data.curiosity3) document.getElementById("curiosity3").value = data.curiosity3;
+}
+
+// --- ID + PIN handling ---
+const idInput = document.getElementById("idInput");
+const pinInput = document.getElementById("pinInput");
+const savedAuth = ee_getSavedAuth();
+idInput.value = savedAuth.id;
+pinInput.value = savedAuth.pin;
+
+async function doVerifyAndLoad(){
+  const id = idInput.value.trim();
+  const pin = pinInput.value.trim();
+  if(!id || !pin){ ee_setStatus(document.getElementById("statusMsg"), "학번과 비밀번호를 모두 입력해주세요.", true); return; }
+  const result = await ee_verify(id, pin, document.getElementById("statusMsg"));
+  if(result.ok){
+    const data = await ee_loadResponse(DAY, FORM_ID, document.getElementById("statusMsg"));
+    if(data) populateData(data);
+  }
+}
+
+document.getElementById("verifyBtn").addEventListener("click", doVerifyAndLoad);
+if(savedAuth.id && savedAuth.pin) doVerifyAndLoad();
+
+document.getElementById("saveBtn").addEventListener("click", async ()=>{
+  const { id, pin } = ee_getSavedAuth();
+  if(!id || !pin){ ee_setStatus(document.getElementById("saveStatus"), "먼저 위에서 학번/비밀번호 확인을 눌러주세요.", true); return; }
+  const data = collectData();
+  await ee_saveResponse(DAY, FORM_ID, data, document.getElementById("saveStatus"));
+});
+</script>
+</body>
+</html>

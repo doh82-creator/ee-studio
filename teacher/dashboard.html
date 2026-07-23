@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>교사 대시보드 — EE Research Studio</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@500;700;900&display=swap');
+  :root{ --ink:#0848A0; --ink-soft:#4C6FA0; --paper:#F2F6FB; --card:#FFFFFF; --accent:#0078C0; --accent-soft:#BFE0F2; --forest:#20B0E8; --line:#CBDCEA; --line-strong:#9FBFDA; --text:#16233A; }
+  *{box-sizing:border-box;}
+  body{background:var(--paper); margin:0; font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","Noto Sans KR",sans-serif; color:var(--text); word-break:keep-all; overflow-wrap:break-word;}
+  .topbar{background:var(--ink); color:#fff; padding:12px 24px; display:flex; align-items:center; justify-content:space-between;}
+  .topbar a{color:#BFE0F2; text-decoration:none; font-size:12px;}
+  .brand{font-family:'Noto Sans KR',sans-serif; font-size:14px;}
+  .layout{display:grid; grid-template-columns:280px 1fr; gap:0; min-height:calc(100vh - 46px);}
+  .side{background:#fff; border-right:1px solid var(--line); padding:24px 18px;}
+  .main{padding:34px 40px;}
+  .gate{max-width:360px; margin:80px auto; background:#fff; border:1px solid var(--line); border-radius:8px; padding:34px;}
+  .gate h1{font-family:'Noto Sans KR',sans-serif; font-size:20px; color:var(--ink); margin-top:0;}
+  .gate input{width:100%; padding:10px 12px; border:1px solid var(--line-strong); border-radius:5px; font-size:14px; margin-bottom:12px;}
+  .gate button{width:100%; padding:11px; background:var(--accent); color:#fff; border:none; border-radius:5px; font-weight:700; cursor:pointer; font-size:13.5px;}
+  .gate .err{color:var(--accent); font-size:12.5px; margin-top:8px; min-height:16px;}
+  h2{font-family:'Noto Sans KR',sans-serif; font-size:20px; color:var(--ink); margin-top:0;}
+  .search{width:100%; padding:9px 11px; border:1px solid var(--line-strong); border-radius:5px; font-size:13px; margin-bottom:14px;}
+  .student-item{padding:10px 12px; border-radius:5px; font-size:13px; cursor:pointer; display:flex; justify-content:space-between;}
+  .student-item:hover{background:#EAF1F8;}
+  .student-item.active{background:var(--ink); color:#fff;}
+  .student-item .sid{color:var(--ink-soft); font-size:11px;}
+  .student-item.active .sid{color:#C7CEDB;}
+  .empty{color:var(--ink-soft); font-size:13.5px; margin-top:60px; text-align:center;}
+  .resp-card{background:#fff; border:1px solid var(--line); border-radius:6px; padding:20px 24px; margin-bottom:16px;}
+  .resp-head{display:flex; justify-content:space-between; align-items:center; margin-bottom:14px; padding-bottom:10px; border-bottom:1px solid var(--line);}
+  .resp-title{font-weight:700; color:var(--ink); font-size:13.5px; text-transform:uppercase; letter-spacing:.5px;}
+  .resp-time{font-size:11px; color:var(--ink-soft);}
+  .kv{display:grid; grid-template-columns:220px 1fr; gap:6px 14px; font-size:12.8px; padding:5px 0; border-bottom:1px dashed var(--line);}
+  .kv .k{color:var(--ink-soft); font-weight:600;}
+  .kv .v{color:var(--text); white-space:pre-wrap;}
+  hidden{display:none;}
+</style>
+</head>
+<body>
+  <div class="topbar">
+    <div class="brand">EE Research Studio · 교사용</div>
+    <a href="../index.html">← 학생용 홈으로</a>
+  </div>
+
+  <div id="gateView" class="gate">
+    <h1>교사 암호 확인</h1>
+    <input type="password" id="teacherPass" placeholder="교사 암호">
+    <button id="enterBtn">입장</button>
+    <div class="err" id="gateErr"></div>
+  </div>
+
+  <div id="dashView" class="layout" style="display:none;">
+    <div class="side">
+      <h2 style="font-size:15px;">학생 명단</h2>
+      <input class="search" id="searchBox" placeholder="이름 검색…">
+      <div id="studentList"></div>
+    </div>
+    <div class="main" id="mainPanel">
+      <div class="empty">왼쪽에서 학생을 선택하면<br>제출한 과제를 볼 수 있습니다.</div>
+    </div>
+  </div>
+
+<script src="../assets/app.js"></script>
+<script>
+let teacherPass = "";
+let allStudents = [];
+
+document.getElementById("enterBtn").addEventListener("click", async ()=>{
+  const pass = document.getElementById("teacherPass").value.trim();
+  const errEl = document.getElementById("gateErr");
+  if(!pass){ errEl.textContent = "암호를 입력해주세요."; return; }
+  if(CONFIG.APPS_SCRIPT_URL.includes("PASTE_YOUR")){ errEl.textContent = "서버 연결 전입니다 (교사용 설정 필요)."; return; }
+
+  errEl.textContent = "확인 중…";
+  try{
+    const result = await ee_apiCall({ action:"teacher_roster", teacherPass: pass });
+    if(!result.ok){ errEl.textContent = result.message || "암호가 올바르지 않습니다."; return; }
+    teacherPass = pass;
+    allStudents = result.students.sort((a,b)=> a.name.localeCompare(b.name, "ko"));
+    document.getElementById("gateView").style.display = "none";
+    document.getElementById("dashView").style.display = "grid";
+    renderStudentList(allStudents);
+  }catch(e){
+    errEl.textContent = "서버 연결 실패. 인터넷 연결을 확인해주세요.";
+  }
+});
+
+function renderStudentList(students){
+  const list = document.getElementById("studentList");
+  list.innerHTML = "";
+  students.forEach(s=>{
+    const div = document.createElement("div");
+    div.className = "student-item";
+    div.innerHTML = `<span>${s.name}</span><span class="sid">${s.id}</span>`;
+    div.addEventListener("click", ()=>{
+      document.querySelectorAll(".student-item").forEach(el=>el.classList.remove("active"));
+      div.classList.add("active");
+      loadStudent(s);
+    });
+    list.appendChild(div);
+  });
+}
+
+document.getElementById("searchBox").addEventListener("input", (e)=>{
+  const q = e.target.value.trim();
+  renderStudentList(allStudents.filter(s=> s.name.includes(q) || s.id.includes(q)));
+});
+
+async function loadStudent(student){
+  const panel = document.getElementById("mainPanel");
+  panel.innerHTML = `<h2>${student.name} <span style="font-size:12px; color:var(--ink-soft); font-weight:400;">(${student.id})</span></h2><div class="empty" style="margin-top:20px;">불러오는 중…</div>`;
+
+  const result = await ee_apiCall({ action:"teacher_view", teacherPass, studentId: student.id });
+  if(!result.ok){ panel.innerHTML += `<div class="empty">불러오기 실패: ${result.message||""}</div>`; return; }
+
+  if(result.results.length === 0){
+    panel.innerHTML = `<h2>${student.name} <span style="font-size:12px; color:var(--ink-soft); font-weight:400;">(${student.id})</span></h2><div class="empty">아직 제출한 과제가 없습니다.</div>`;
+    return;
+  }
+
+  let html = `<h2>${student.name} <span style="font-size:12px; color:var(--ink-soft); font-weight:400;">(${student.id})</span></h2>`;
+  result.results
+    .sort((a,b)=> (a.day+a.formId).localeCompare(b.day+b.formId))
+    .forEach(r=>{
+      html += `<div class="resp-card">
+        <div class="resp-head">
+          <span class="resp-title">${r.day} · ${r.formId}</span>
+          <span class="resp-time">${new Date(r.timestamp).toLocaleString("ko-KR")}</span>
+        </div>`;
+      for(const [k,v] of Object.entries(r.data)){
+        if(v === "" || v === undefined) continue;
+        html += `<div class="kv"><div class="k">${k.replace(/_/g," ")}</div><div class="v">${escapeHtml(String(v))}</div></div>`;
+      }
+      html += `</div>`;
+    });
+  panel.innerHTML = html;
+}
+
+function escapeHtml(s){
+  return s.replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;");
+}
+</script>
+</body>
+</html>

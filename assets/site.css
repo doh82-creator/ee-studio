@@ -1,0 +1,62 @@
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@500;700;900&display=swap');
+
+:root{
+  /* Palette drawn from the 충남삼성고 crest */
+  --ink:#0848A0;        /* deep navy — headers, primary text on light bg */
+  --ink-soft:#4C6FA0;   /* muted navy-blue — secondary text */
+  --paper:#F2F6FB;      /* cool, light blue-tinted background */
+  --card:#FFFFFF;
+  --accent:#0078C0;     /* medium blue — CTAs, links, primary accent */
+  --accent-soft:#BFE0F2;
+  --forest:#20B0E8;     /* bright sky blue — secondary accent / tags */
+  --line:#CBDCEA; --line-strong:#9FBFDA; --text:#16233A;
+}
+*{box-sizing:border-box;}
+body{margin:0; background:var(--paper); font-family:-apple-system,BlinkMacSystemFont,"Noto Sans KR","Malgun Gothic","Apple SD Gothic Neo",sans-serif; color:var(--text); word-break:keep-all; overflow-wrap:break-word;}
+
+.gothic{font-family:'Noto Sans KR',-apple-system,BlinkMacSystemFont,"Malgun Gothic","Apple SD Gothic Neo",sans-serif;}
+
+/* Top bar shown on every page */
+.topbar{background:var(--ink); color:#fff; padding:15px 28px; display:flex; align-items:center; justify-content:space-between; position:sticky; top:0; z-index:10;}
+.topbar .brand{font-family:'Noto Sans KR',sans-serif; font-weight:700; font-size:17px; letter-spacing:.2px;}
+.topbar .brand a{color:#fff; text-decoration:none;}
+.topbar .crumb{font-size:13px; color:#D6E7F5;}
+.topbar .crumb a{color:#BFE0F2; text-decoration:none;}
+.topbar .crumb a:hover{text-decoration:underline;}
+
+.wrap{max-width:960px; margin:0 auto; padding:44px 24px 70px;}
+
+/* Hero on index */
+.hero{text-align:left; margin-bottom:38px;}
+.hero .kicker{font-size:12px; letter-spacing:2.5px; text-transform:uppercase; color:var(--accent); font-weight:700; margin-bottom:12px;}
+.hero h1{font-family:'Noto Sans KR',sans-serif; font-weight:900; font-size:44px; line-height:1.2; margin:0 0 14px; color:var(--ink); letter-spacing:-.5px;}
+.hero p{font-size:16px; color:var(--ink-soft); max-width:660px; line-height:1.75;}
+.hero p.hero-note{font-size:13.5px; color:var(--ink-soft); opacity:.85; margin-top:18px; padding-top:18px; border-top:1px solid var(--line); max-width:700px; line-height:1.7;}
+
+/* Day grid on index */
+.day-grid{display:grid; grid-template-columns:repeat(auto-fill,minmax(200px,1fr)); gap:14px;}
+.day-card{display:block; background:var(--card); border:1px solid var(--line); border-radius:8px; padding:22px 20px; text-decoration:none; color:var(--text); transition:box-shadow .15s, transform .15s;}
+.day-card:hover{box-shadow:0 6px 18px rgba(8,72,160,.14); transform:translateY(-2px);}
+.day-card .d-num{font-family:'Noto Sans KR',sans-serif; font-size:32px; font-weight:900; color:var(--accent); line-height:1.1;}
+.day-card .d-eyebrow{display:block; font-size:10px; font-weight:700; letter-spacing:2.5px; text-transform:uppercase; color:var(--ink-soft); margin-bottom:2px;}
+.day-card .d-title{font-size:15px; font-weight:700; color:var(--ink); margin-top:5px;}
+.day-card .d-phase{display:inline-block; margin-top:9px; font-size:10.5px; letter-spacing:.5px; text-transform:uppercase; padding:3px 8px; border-radius:10px; font-weight:700; background:#E3F3FB; color:#0E7CAE;}
+.day-card.locked{opacity:.5; cursor:default; pointer-events:none; background:#EEF2F6;}
+.day-card.locked .d-phase{background:#E3E8EE; color:var(--ink-soft);}
+
+/* Handout list on a day page */
+.h-list{display:flex; flex-direction:column; gap:12px; margin-top:6px;}
+.h-item{display:flex; align-items:center; gap:16px; background:var(--card); border:1px solid var(--line); border-radius:8px; padding:18px 20px;}
+.h-icon{width:40px; height:40px; border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:16px; font-weight:900; flex-shrink:0; font-family:'Noto Sans KR',sans-serif;}
+.h-icon.view{background:#E3EDF8; color:var(--ink);}
+.h-icon.write{background:#DCF0FA; color:var(--accent);}
+.h-body{flex:1;}
+.h-title{font-size:15.5px; font-weight:700; color:var(--ink);}
+.h-desc{font-size:13.5px; color:var(--ink-soft); margin-top:3px;}
+.h-actions a{display:inline-block; font-size:13px; font-weight:700; text-decoration:none; padding:9px 16px; border-radius:5px; border:1px solid var(--ink); color:var(--ink); margin-left:8px;}
+.h-actions a.primary{background:var(--ink); color:#fff;}
+.h-actions a.write-btn{background:var(--accent); border-color:var(--accent); color:#fff;}
+
+.section-label{font-size:12.5px; letter-spacing:2px; text-transform:uppercase; color:var(--accent); font-weight:700; margin:34px 0 13px;}
+
+footer.site-footer{text-align:center; font-size:12.5px; color:var(--ink-soft); padding:30px 20px; border-top:1px solid var(--line); margin-top:40px;}

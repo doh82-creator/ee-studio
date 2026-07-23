@@ -1,0 +1,44 @@
+<!-- ============================================================
+     TEMPLATE — copy this file to build a new VIEW/PRINT handout.
+     1. Duplicate this file into /handouts/ as e.g. day2-1-yourname.html
+     2. Fill in the bracketed [ ] placeholders
+     3. Add unique page-specific CSS (if any) inside the small <style> block
+     4. Link it from the relevant /days/dayN.html page
+     ============================================================ -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>[Handout Title] — EE Research Studio</title>
+<link rel="stylesheet" href="../assets/handout.css">
+<style>
+  /* Add ONLY styles unique to this handout here.
+     Anything shared (colors, .sheet, .stamp, tables, .section-title...)
+     already lives in ../assets/handout.css — do not repeat it. */
+</style>
+</head>
+<body>
+<div class="site-topbar">
+  <div class="brand">EE Research Studio</div>
+  <div><a href="../index.html">Home</a> &nbsp;/&nbsp; <a href="../days/dayN.html">Day [N]</a> &nbsp;/&nbsp; [Handout Title]</div>
+</div>
+
+<div class="sheet">
+  <div class="stamp"><span class="num">[N]</span><span class="lbl">of [total]</span></div>
+  <div class="masthead">
+    <div class="program">EE Research Studio · DP1 Extended Essay Preparation</div>
+    <h1>[Handout Title]</h1>
+    <div class="sub">Handout [N] · Day [X] — [Day Title] &nbsp;|&nbsp; Name: _______________________</div>
+  </div>
+
+  <div class="lede">
+    [One or two sentences framing why this handout matters today.]
+  </div>
+
+  <div class="section-title">[Section Heading]</div>
+  <p>[Content goes here — reuse .goal-grid / table / .callout / .writeline patterns from existing Day 1 handouts as needed.]</p>
+
+  <div class="footer"><span>EE Research Studio</span><span>[Optional footer note]</span></div>
+</div>
+</body>
+</html>
