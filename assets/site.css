@@ -32,6 +32,8 @@ body{margin:0; background:var(--paper); font-family:-apple-system,BlinkMacSystem
 .hero h1{font-family:'Noto Sans KR',sans-serif; font-weight:900; font-size:44px; line-height:1.2; margin:0 0 14px; color:var(--ink); letter-spacing:-.5px;}
 .hero p{font-size:16px; color:var(--ink-soft); max-width:660px; line-height:1.75;}
 .hero p.hero-note{font-size:13.5px; color:var(--ink-soft); opacity:.85; margin-top:18px; padding-top:18px; border-top:1px solid var(--line); max-width:700px; line-height:1.7;}
+.guide-btn{display:inline-block; margin-top:22px; background:var(--accent); color:#fff; text-decoration:none; font-weight:700; font-size:14px; padding:12px 22px; border-radius:6px; transition:background .15s;}
+.guide-btn:hover{background:var(--ink);}
 
 /* Day grid on index */
 .day-grid{display:grid; grid-template-columns:repeat(auto-fill,minmax(200px,1fr)); gap:14px;}

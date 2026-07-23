@@ -1,0 +1,590 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Extended Essay | Student Guide 2027</title>
+  <style>
+    :root {
+      --ink: #0d1b2a;
+      --muted: #627187;
+      --paper: #f5f7fb;
+      --panel: #ffffff;
+      --line: #dce3ee;
+      --navy: #12355b;
+      --blue: #2f73c8;
+      --sky: #e9f3ff;
+      --mint: #e8f7f1;
+      --teal: #11806a;
+      --gold: #f4b63f;
+      --coral: #e86d5a;
+      --violet: #6e62c8;
+      --shadow: 0 18px 55px rgba(20, 43, 79, .13);
+      --body-min: 17px;
+    }
+
+    * { box-sizing: border-box; }
+    html, body { min-height: 100%; }
+    body {
+      margin: 0;
+      color: var(--ink);
+      background: #e8edf5;
+      font-family: Pretendard, "Apple SD Gothic Neo", "Noto Sans KR", Arial, sans-serif;
+      font-size: var(--body-min);
+      letter-spacing: -0.02em;
+    }
+
+    .deck {
+      width: min(1420px, calc(100vw - 38px));
+      aspect-ratio: 16 / 9;
+      min-height: 680px;
+      margin: 28px auto;
+      position: relative;
+      overflow: hidden;
+      background: var(--paper);
+      border-radius: 26px;
+      box-shadow: var(--shadow);
+      /* Korean copy wraps between eojeols (space-separated units), not inside one. */
+      word-break: keep-all;
+      overflow-wrap: normal;
+      line-break: strict;
+    }
+
+    .slide {
+      display: none;
+      min-height: 100%;
+      padding: clamp(36px, 5.2vw, 78px) clamp(42px, 6.5vw, 96px) 76px;
+      position: relative;
+      overflow: hidden;
+    }
+    .slide.active { display: flex; flex-direction: column; }
+    .slide::after {
+      content: "";
+      position: absolute;
+      width: 340px; height: 340px;
+      border-radius: 50%;
+      background: rgba(47, 115, 200, .06);
+      right: -150px; top: -155px;
+      pointer-events: none;
+    }
+
+    .eyebrow {
+      display: flex; align-items: center; gap: 10px;
+      color: var(--blue); font-size: var(--body-min); font-weight: 800;
+      letter-spacing: .07em; text-transform: uppercase;
+      margin-bottom: 16px; z-index: 1;
+    }
+    .eyebrow::before { content: ""; width: 26px; height: 3px; background: currentColor; border-radius: 9px; }
+    h1, h2, h3, p { margin-top: 0; }
+    h1 { font-size: clamp(45px, 5.2vw, 76px); line-height: 1.12; margin-bottom: 22px; letter-spacing: -.055em; }
+    h2 { font-size: clamp(30px, 3.25vw, 48px); line-height: 1.2; margin-bottom: 20px; letter-spacing: -.045em; }
+    h3 { font-size: 20px; margin-bottom: 7px; line-height: 1.35; }
+    .lead { color: #41536b; font-size: clamp(17px, 1.55vw, 23px); line-height: 1.65; max-width: 850px; }
+    .small { font-size: var(--body-min); line-height: 1.5; color: var(--muted); }
+    .accent { color: var(--blue); }
+    .mint-text { color: var(--teal); }
+    .coral-text { color: #c54d3d; }
+    .violet-text { color: var(--violet); }
+    .spacer { flex: 1; }
+
+    .topline { display: flex; justify-content: space-between; align-items: center; gap: 20px; z-index: 1; }
+    .tag { border: 1px solid #cfe0f6; color: var(--blue); background: #f7fbff; padding: 7px 12px; border-radius: 999px; font-weight: 750; font-size: var(--body-min); white-space: nowrap; }
+
+    .hero { background: linear-gradient(133deg, #10355d 0%, #164574 58%, #2a70b4 100%); color: white; }
+    .hero::after { width: 520px; height: 520px; right: -115px; top: -170px; background: rgba(255,255,255,.07); box-shadow: -150px 220px 0 rgba(255,255,255,.035); }
+    .hero .eyebrow { color: #a9d3ff; }
+    .hero .lead { color: #e0edfb; max-width: 660px; }
+    .hero .rule { height: 1px; background: rgba(255,255,255,.28); width: min(600px, 75%); margin: 30px 0; }
+    .hero-note { display: flex; gap: 28px; font-size: var(--body-min); color: #d0e4f9; align-items: center; }
+    .hero-note strong { color: #fff; }
+    .orbital { position: absolute; right: 8%; bottom: 10%; width: 255px; height: 255px; border: 1px solid rgba(255,255,255,.35); border-radius: 50%; }
+    .orbital::before, .orbital::after { content: ""; position: absolute; border-radius: 50%; background: #c5e1ff; }
+    .orbital::before { width: 22px; height: 22px; top: 15px; left: 38px; box-shadow: 188px 135px 0 #72b8fa, 63px 220px 0 #fff; }
+    .orbital::after { inset: 45px; border: 1px solid rgba(255,255,255,.28); background: transparent; }
+
+    .stat-row { display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px; margin-top: auto; z-index: 1; }
+    .stat { background: var(--panel); border: 1px solid var(--line); border-radius: 17px; padding: 18px 17px; }
+    .stat .number { display: block; color: var(--blue); font-size: 27px; font-weight: 850; letter-spacing: -.05em; margin-bottom: 5px; }
+    .stat .label { font-size: var(--body-min); color: var(--muted); line-height: 1.4; }
+
+    .two-col { display: grid; grid-template-columns: 1.1fr .9fr; gap: clamp(28px, 4vw, 64px); align-items: center; flex: 1; z-index: 1; }
+    .three-col { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; z-index: 1; }
+    .cards { display: grid; gap: 14px; }
+    .two-col > *, .three-col > *, .criteria > *, .criterion-detail > *, .reflection-grid > *, .traffic > *, .compare > *, .responsibility > *, .proposal > *, .essay-map > * { min-width: 0; }
+    .card { background: var(--panel); border: 1px solid var(--line); border-radius: 18px; padding: 18px 19px; }
+    .card p { color: var(--muted); font-size: var(--body-min); line-height: 1.55; margin-bottom: 0; }
+    .card strong { color: var(--ink); }
+    .soft-blue { background: var(--sky); border-color: #d4e8ff; }
+    .soft-mint { background: var(--mint); border-color: #d4eee4; }
+    .soft-gold { background: #fff6df; border-color: #ffe8b4; }
+    .soft-violet { background: #f0effd; border-color: #dcdaff; }
+    .soft-coral { background: #fff0ec; border-color: #ffd9d1; }
+
+    .big-number { color: var(--blue); font-size: clamp(68px, 9vw, 130px); font-weight: 900; line-height: .85; letter-spacing: -.08em; }
+    .big-label { font-weight: 800; font-size: 21px; margin-top: 12px; }
+    .timeline { display: grid; grid-template-columns: repeat(5, 1fr); gap: 12px; margin-top: 24px; }
+    .timeline-item { position: relative; min-width: 0; padding-top: 22px; min-height: 126px; }
+    .timeline-item::before { content: ""; position: absolute; top: 0; left: 0; width: 100%; height: 4px; border-radius: 8px; background: #c8d8e9; }
+    .timeline-item:first-child::before { background: var(--blue); }
+    .timeline-item:nth-child(4)::before { background: var(--teal); }
+    .timeline-item:nth-child(5)::before { background: var(--violet); }
+    .timeline-item .when { color: var(--blue); font-size: var(--body-min); font-weight: 800; }
+    .timeline-item .what { font-size: var(--body-min); font-weight: 750; margin-top: 7px; line-height: 1.4; }
+    .timeline-item .small {
+      display: block;
+      margin-top: 3px;
+      word-break: keep-all;
+      overflow-wrap: normal;
+      line-break: strict;
+    }
+
+    .flow { display: flex; align-items: stretch; gap: 9px; z-index: 1; margin-top: 22px; }
+    .flow-card { flex: 1; background: var(--panel); border: 1px solid var(--line); border-radius: 14px; padding: 16px 13px; min-width: 0; }
+    .flow-card .step { color: var(--blue); font-size: var(--body-min); font-weight: 850; text-transform: uppercase; letter-spacing: .05em; }
+    .flow-card .term { display: block; font-weight: 850; margin-top: 7px; font-size: 19px; }
+    .flow-card .desc { color: var(--muted); font-size: var(--body-min); line-height: 1.45; margin-top: 5px; }
+    .flow-arrow { display: flex; align-items: center; color: #8da8c4; font-size: 21px; }
+
+    .checklist { list-style: none; padding: 0; margin: 0; display: grid; gap: 10px; }
+    .checklist li { position: relative; padding: 11px 12px 11px 39px; border-bottom: 1px solid #e9edf3; font-size: var(--body-min); line-height: 1.48; }
+    .checklist li::before { content: "✓"; position: absolute; left: 12px; top: 10px; color: var(--teal); font-weight: 900; }
+    .checklist li:last-child { border-bottom: 0; }
+    .question-box { background: linear-gradient(135deg, #f0f7ff, #e6f1fe); border: 1px solid #cfe3fb; border-radius: 20px; padding: 25px; }
+    .question-box .question { font-size: clamp(18px, 1.9vw, 28px); font-weight: 820; line-height: 1.45; }
+    .question-box .question span { color: var(--blue); }
+
+    .proposal { display: grid; grid-template-columns: repeat(2, 1fr); gap: 11px; z-index: 1; }
+    .proposal-item { display: flex; align-items: flex-start; gap: 12px; background: white; border: 1px solid var(--line); padding: 14px 15px; border-radius: 15px; }
+    .proposal-num { width: 29px; height: 29px; flex: 0 0 29px; display: grid; place-items: center; border-radius: 50%; background: var(--sky); color: var(--blue); font-weight: 850; font-size: var(--body-min); }
+    .proposal-item strong { display: block; font-size: 18px; margin-bottom: 4px; }
+    .proposal-item span { color: var(--muted); display: block; font-size: var(--body-min); line-height: 1.45; }
+
+    .essay-map { display: grid; grid-template-columns: 1.05fr 1.7fr 1.05fr; gap: 13px; align-items: stretch; z-index: 1; }
+    .map-intro, .map-body, .map-conclusion { border-radius: 18px; padding: 21px; }
+    .map-intro { background: var(--sky); border: 1px solid #d4e8ff; }
+    .map-body { background: var(--panel); border: 1px solid var(--line); }
+    .map-conclusion { background: var(--mint); border: 1px solid #d4eee4; }
+    .map-label { color: var(--blue); font-size: var(--body-min); font-weight: 900; text-transform: uppercase; letter-spacing: .08em; }
+    .map-body .map-label { color: var(--violet); }
+    .map-conclusion .map-label { color: var(--teal); }
+    .map-title { font-weight: 850; margin: 8px 0; font-size: 19px; }
+    .map-list { margin: 0; padding-left: 20px; color: #4c6079; font-size: var(--body-min); line-height: 1.62; }
+    .cea { display: grid; grid-template-columns: 1fr 1fr 1fr 1fr; gap: 7px; margin-top: 13px; }
+    .cea span { display: block; text-align: center; padding: 8px 4px; font-size: var(--body-min); border-radius: 8px; font-weight: 800; color: #3e4b5c; background: #f0effd; }
+
+    .criteria { display: grid; grid-template-columns: repeat(5, 1fr); gap: 12px; z-index: 1; flex: 1; align-items: center; }
+    .criterion { position: relative; border-radius: 18px; padding: 18px 16px; min-height: 260px; background: var(--panel); border: 1px solid var(--line); overflow: hidden; }
+    .criterion::before { content: ""; position: absolute; height: 6px; top: 0; left: 0; right: 0; background: var(--blue); }
+    .criterion:nth-child(2)::before { background: #4c9b8c; }
+    .criterion:nth-child(3)::before { background: var(--violet); }
+    .criterion:nth-child(4)::before { background: var(--gold); }
+    .criterion:nth-child(5)::before { background: var(--coral); }
+    .criterion .letter { font-weight: 900; font-size: 21px; color: var(--blue); }
+    .criterion:nth-child(2) .letter { color: #368172; }
+    .criterion:nth-child(3) .letter { color: var(--violet); }
+    .criterion:nth-child(4) .letter { color: #a56d00; }
+    .criterion:nth-child(5) .letter { color: #c6503e; }
+    .criterion h3 { font-size: 19px; margin: 9px 0 7px; }
+    .criterion p { font-size: var(--body-min); color: var(--muted); line-height: 1.48; margin-bottom: 0; }
+    .points { position: absolute; right: 14px; bottom: 13px; color: #77879c; font-weight: 850; font-size: var(--body-min); }
+    .total-badge { position: absolute; right: 7%; top: 11%; color: var(--blue); font-weight: 900; font-size: var(--body-min); background: var(--sky); border: 1px solid #d0e5fb; padding: 8px 13px; border-radius: 999px; }
+
+    .criterion-detail { display: grid; grid-template-columns: .87fr 1.13fr; gap: 20px; align-items: stretch; flex: 1; z-index: 1; }
+    .criterion-icon { background: linear-gradient(145deg, #10355d, #286fb0); color: white; border-radius: 21px; padding: 25px; display: flex; flex-direction: column; justify-content: center; }
+    .criterion-icon .letter-large { font-size: 72px; font-weight: 900; line-height: .88; color: #bee0ff; letter-spacing: -.08em; }
+    .criterion-icon p { margin: 14px 0 0; color: #e0efff; line-height: 1.55; font-size: var(--body-min); }
+    .criterion-icon.alt { background: linear-gradient(145deg, #7255b5, #9b82d5); }
+    .criterion-icon.alt .letter-large { color: #e4dcff; }
+    .criterion-icon.mint { background: linear-gradient(145deg, #1d7568, #55a996); }
+    .criterion-icon.mint .letter-large { color: #d8f7ee; }
+    .criterion-icon.gold { background: linear-gradient(145deg, #a36c00, #e8a92a); }
+    .criterion-icon.gold .letter-large { color: #fff1c7; }
+    .criterion-detail .checklist { background: white; border: 1px solid var(--line); border-radius: 21px; padding: 13px 20px; }
+    .detail-caption { color: var(--muted); font-size: var(--body-min); margin: 0 0 12px; }
+
+    .reflection-grid { display: grid; grid-template-columns: .9fr 1.3fr; gap: 22px; align-items: center; z-index: 1; flex: 1; }
+    .reflection-wheel { width: min(280px, 28vw); aspect-ratio: 1; margin: 0 auto; border-radius: 50%; background: conic-gradient(var(--coral) 0 33%, var(--gold) 33% 66%, var(--blue) 66% 100%); padding: 18px; display: grid; place-items: center; }
+    .reflection-wheel > div { width: 100%; height: 100%; border-radius: 50%; background: var(--paper); display: grid; place-items: center; text-align: center; padding: 20px; }
+    .reflection-wheel strong { font-size: 35px; letter-spacing: -.06em; display: block; }
+    .reflection-wheel span { font-size: var(--body-min); color: var(--muted); }
+    .reflection-steps { display: grid; gap: 10px; }
+    .reflection-step { display: grid; grid-template-columns: 36px 1fr; gap: 12px; align-items: center; }
+    .reflection-step .bubble { width: 36px; height: 36px; border-radius: 50%; display: grid; place-items: center; color: white; background: var(--blue); font-weight: 850; }
+    .reflection-step:nth-child(2) .bubble { background: var(--gold); color: #694900; }
+    .reflection-step:nth-child(3) .bubble { background: var(--coral); }
+    .reflection-step .content { padding: 11px 14px; background: white; border: 1px solid var(--line); border-radius: 13px; font-size: var(--body-min); line-height: 1.42; }
+    .reflection-step strong { display: block; margin-bottom: 3px; }
+
+    .traffic { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; z-index: 1; }
+    .traffic-card { border-radius: 18px; padding: 20px; min-height: 235px; background: white; border: 1px solid var(--line); }
+    .traffic-light { width: 14px; height: 14px; border-radius: 50%; margin-bottom: 14px; background: var(--teal); box-shadow: 0 0 0 7px #e6f7f1; }
+    .traffic-card:nth-child(2) .traffic-light { background: var(--gold); box-shadow: 0 0 0 7px #fff5de; }
+    .traffic-card:nth-child(3) .traffic-light { background: var(--coral); box-shadow: 0 0 0 7px #ffede9; }
+    .traffic-card h3 { font-size: 20px; margin-bottom: 10px; }
+    .traffic-card p { color: var(--muted); font-size: var(--body-min); line-height: 1.55; margin-bottom: 0; }
+    .traffic-card b { color: var(--ink); }
+
+    .compare { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; z-index: 1; }
+    .compare-card { border-radius: 19px; padding: 23px; background: white; border: 1px solid var(--line); min-height: 260px; }
+    .compare-card .top { display: flex; gap: 13px; align-items: baseline; margin-bottom: 13px; }
+    .compare-card .abbr { font-size: 30px; color: var(--blue); font-weight: 900; letter-spacing: -.06em; }
+    .compare-card p { color: var(--muted); line-height: 1.55; font-size: var(--body-min); }
+    .compare-card ul { margin: 0; padding-left: 21px; color: #40516a; line-height: 1.55; font-size: var(--body-min); }
+    .compare-card:nth-child(2) .abbr { color: var(--coral); }
+    .note-band { background: #f1f5fa; padding: 11px 15px; border-radius: 12px; font-size: var(--body-min); color: #4b5e78; margin-top: 14px; }
+
+    .responsibility { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; z-index: 1; }
+    .responsibility .side { border: 1px solid var(--line); border-radius: 20px; padding: 22px; background: white; }
+    .responsibility .side.student { background: #eff7ff; border-color: #d1e6fb; }
+    .responsibility h3 { font-size: 22px; margin-bottom: 12px; }
+    .responsibility ul { margin: 0; padding-left: 21px; font-size: var(--body-min); line-height: 1.65; color: #44566f; }
+    .responsibility .rule { margin-top: 14px; background: #fff0ec; color: #954233; padding: 11px 13px; border-radius: 11px; font-size: var(--body-min); line-height: 1.45; }
+
+    .finish { background: linear-gradient(135deg, #f0f7ff, #fbfdff 55%, #e7f6f0); }
+    .finish .two-col { grid-template-columns: 1.2fr .8fr; }
+    .next-card { background: var(--navy); color: white; padding: 25px; border-radius: 21px; }
+    .next-card h3 { font-size: 22px; margin-bottom: 14px; }
+    .next-card ol { margin: 0; padding-left: 23px; line-height: 1.7; font-size: var(--body-min); color: #e6f0fb; }
+    .source-list { margin: 9px 0 0; padding-left: 21px; color: var(--muted); font-size: var(--body-min); line-height: 1.5; }
+    a { color: inherit; }
+
+    .footer { position: absolute; left: clamp(42px, 6.5vw, 96px); right: clamp(42px, 6.5vw, 96px); bottom: 23px; display: flex; justify-content: space-between; align-items: center; z-index: 5; color: #75849a; font-size: var(--body-min); }
+    .hero .footer { color: #c9dff4; }
+    .footer .progress { display: flex; gap: 4px; align-items: center; }
+    .footer .bar { height: 4px; width: 35px; border-radius: 7px; background: #d2dce9; }
+    .hero .footer .bar { background: rgba(255,255,255,.3); }
+    .footer .bar.on { background: var(--blue); }
+    .hero .footer .bar.on { background: #a6d3ff; }
+
+    .controls { position: absolute; right: 27px; bottom: 20px; z-index: 10; display: flex; gap: 7px; }
+    .controls button { width: 34px; height: 34px; border: 1px solid #cbd7e6; background: rgba(255,255,255,.92); border-radius: 10px; color: var(--navy); cursor: pointer; font-size: 19px; font-weight: 800; }
+    .controls button:hover { background: #eff6ff; }
+    .slide-nav { position: absolute; top: 50%; transform: translateY(-50%); right: 15px; z-index: 10; display: grid; gap: 6px; }
+    .slide-nav button { padding: 0; border: none; width: 7px; height: 7px; border-radius: 50%; background: #c5d2e0; cursor: pointer; }
+    .slide-nav button.active { background: var(--blue); height: 20px; border-radius: 5px; }
+    .hero .slide-nav button { background: rgba(255,255,255,.38); }
+    .hero .slide-nav button.active { background: white; }
+
+    @media (max-width: 840px) {
+      .deck { width: 100%; min-height: 100vh; margin: 0; border-radius: 0; aspect-ratio: auto; }
+      .slide { min-height: 100vh; padding: 44px 42px 78px; overflow: auto; }
+      .two-col, .criterion-detail, .reflection-grid, .responsibility, .compare, .finish .two-col { grid-template-columns: 1fr; }
+      .stat-row { grid-template-columns: repeat(2, 1fr); margin-top: 24px; }
+      .criteria { grid-template-columns: repeat(2, 1fr); overflow: auto; align-items: stretch; }
+      .criterion { min-height: 190px; }
+      .traffic, .three-col { grid-template-columns: 1fr; }
+      .timeline { grid-template-columns: 1fr; }
+      .timeline-item { min-height: auto; padding: 11px 0 12px 21px; }
+      .timeline-item::before { width: 4px; height: 100%; }
+      .flow { flex-wrap: wrap; }
+      .flow-card { flex-basis: 42%; }
+      .flow-arrow { transform: rotate(90deg); }
+      .essay-map { grid-template-columns: 1fr; }
+      .proposal { grid-template-columns: 1fr; }
+      .slide-nav { display: none; }
+    }
+
+    @media print {
+      body { background: white; }
+      .deck { width: 100%; margin: 0; min-height: 0; overflow: visible; box-shadow: none; border-radius: 0; }
+      .slide { display: flex !important; min-height: 100vh; page-break-after: always; break-after: page; }
+      .controls, .slide-nav { display: none; }
+    }
+  </style>
+</head>
+<body>
+  <main class="deck" aria-label="Extended Essay 학생 안내 발표 자료">
+    <section class="slide hero active" data-title="표지">
+      <div class="eyebrow">IB Diploma Programme · First assessment 2027</div>
+      <div class="spacer"></div>
+      <h1>Extended Essay<br><span style="color:#a9d3ff">Student Guide</span></h1>
+      <p class="lead">좋은 EE는 ‘많이 아는 글’이 아니라, <strong>좋은 질문을 세우고 근거를 따라 생각을 발전시키는 독립 탐구</strong>입니다.</p>
+      <div class="rule"></div>
+      <div class="hero-note"><span><strong>Understanding Research Paper</strong></span><span>2026 Summer Course</span><span>김도훈</span></div>
+      <div class="orbital" aria-hidden="true"></div>
+      <div class="footer"><span>EE STUDENT GUIDE</span><span>2027 FIRST ASSESSMENT</span></div>
+    </section>
+
+    <section class="slide" data-title="핵심 변화">
+      <div class="topline"><div class="eyebrow">01 · Start here</div><span class="tag">2027 첫 평가 기준 적용</span></div>
+      <div class="two-col">
+        <div>
+          <h2>이번 코호트의 EE는<br><span class="accent">새 기준으로</span> 평가됩니다.</h2>
+          <p class="lead">따라서 이전 EE 자료의 34점 평가표가 아니라, <strong>총 30점의 5개 기준</strong>으로 연구·글쓰기·성찰을 함께 준비해야 합니다.</p>
+          <div class="stat-row">
+            <div class="stat"><span class="number">4,000</span><span class="label">단어 이내의<br>학술 에세이</span></div>
+            <div class="stat"><span class="number">~40h</span><span class="label">권장 투자 시간<br>독립 탐구 과정</span></div>
+            <div class="stat"><span class="number">3</span><span class="label">필수 성찰 세션<br>지도교사와 진행</span></div>
+            <div class="stat"><span class="number">30</span><span class="label">새 평가체계의<br>총점</span></div>
+          </div>
+        </div>
+        <div class="card soft-blue">
+          <h3>새 평가체계에서 달라진 핵심</h3>
+          <ul class="checklist">
+            <li>형식 자체가 아니라 <strong>연구질문·방법·구조가 연구를 얼마나 잘 받쳐 주는가</strong>를 봅니다.</li>
+            <li>지식 제시와 분석, 논의·평가를 분리하여 더 분명하게 평가합니다.</li>
+            <li>성찰은 ‘무엇을 했는지’의 기록이 아니라, <strong>학습자에게 생긴 변화와 전이</strong>를 평가합니다.</li>
+          </ul>
+          <p class="small" style="margin:14px 0 0">A–D는 에세이 전체, E는 RPF의 reflective statement에 적용됩니다.</p>
+        </div>
+      </div>
+      <div class="footer"><span>NEW GUIDE, NEW LANGUAGE</span><span>01</span></div>
+    </section>
+
+    <section class="slide" data-title="EE란">
+      <div class="eyebrow">02 · What is the EE?</div>
+      <div class="two-col">
+        <div>
+          <div class="big-number">EE</div>
+          <div class="big-label">나의 관심을 학문적 질문으로 바꾸는 경험</div>
+          <p class="lead" style="margin-top:17px">EE는 지도교사의 지원을 받되, 학생이 스스로 주제·질문·방법을 결정하고, 한 과목 또는 두 과목의 관점에서 깊이 있게 탐구하는 학술 에세이입니다.</p>
+        </div>
+        <div class="cards">
+          <div class="card"><h3>개인적 관심에서 출발</h3><p>관심이 오래 유지될 주제를 고르되, 흥미만으로 멈추지 않고 선택한 DP 과목의 개념·이론·방법과 연결합니다.</p></div>
+          <div class="card soft-mint"><h3>근거로 논증을 만듦</h3><p>자료를 모아 설명하는 데서 끝내지 않습니다. 자료를 분석하고, 서로 다른 관점을 검토하며, 연구질문에 답하는 논증을 만듭니다.</p></div>
+          <div class="card soft-gold"><h3>과정도 학습의 일부</h3><p>주제 변경, 방법의 한계, 예상과 다른 발견도 실패가 아닙니다. 연구자의 판단이 어떻게 바뀌었는지를 성찰합니다.</p></div>
+        </div>
+      </div>
+      <div class="footer"><span>INDEPENDENT INQUIRY · SUPPORTED PROCESS</span><span>02</span></div>
+    </section>
+
+    <section class="slide" data-title="수업의 목적">
+      <div class="eyebrow">03 · Our 20 lessons</div>
+      <h2>이번 수업의 목표는<br><span class="accent">EE 완성본</span>이 아니라 <span class="mint-text">실행 가능한 연구계획서</span>입니다.</h2>
+      <p class="lead">바로 긴 글을 쓰기보다, 학술적 글쓰기의 기본기와 좋은 연구의 구조를 먼저 익힌 뒤 나만의 탐구 계획을 설계합니다.</p>
+      <div class="timeline">
+        <div class="timeline-item"><div class="when">LESSONS 1–6</div><div class="what">학술적 글쓰기의 기초</div><div class="small">topic · unity · coherence · short essay 구조</div></div>
+        <div class="timeline-item"><div class="when">LESSONS 7–8</div><div class="what">연구논문의 구성 이해</div><div class="small">주제·문제인식·목적·질문·방법·결론</div></div>
+        <div class="timeline-item"><div class="when">LESSONS 9–10</div><div class="what">개요 읽기와 분석</div><div class="small">연구계획서 outline을 보고<br>논리 구조 찾기</div></div>
+        <div class="timeline-item"><div class="when">LESSONS 11–12</div><div class="what">Role-model paper 분석</div><div class="small">관심 분야의 선행 연구에서<br>질문·방법 배우기</div></div>
+        <div class="timeline-item"><div class="when">LESSONS 13–20</div><div class="what">나의 연구계획서 작성</div><div class="small">outline → introduction → RQ → methodology → peer feedback</div></div>
+      </div>
+      <div class="card soft-violet" style="margin-top:auto; z-index:1"><strong>수업 종료 시점의 산출물</strong> &nbsp; 연구 주제와 문제의식, 잠정 연구질문, 탐구 방법, 선행 자료, 개요와 일정을 갖춘 <strong>Research Proposal</strong></div>
+      <div class="footer"><span>WRITE LESS, PLAN BETTER</span><span>03</span></div>
+    </section>
+
+    <section class="slide" data-title="주제에서 질문으로">
+      <div class="eyebrow">04 · From interest to inquiry</div>
+      <h2>좋은 연구는 ‘큰 관심사’를<br><span class="accent">작고 답할 수 있는 질문</span>으로 좁히는 데서 시작합니다.</h2>
+      <div class="flow">
+        <div class="flow-card"><div class="step">01 Interest</div><span class="term">관심 분야</span><div class="desc">오래 탐구하고 싶은 현상·작품·문제</div></div>
+        <div class="flow-arrow">→</div>
+        <div class="flow-card"><div class="step">02 Subject lens</div><span class="term">과목의 렌즈</span><div class="desc">개념, 이론, 텍스트, 자료, 실험 방법</div></div>
+        <div class="flow-arrow">→</div>
+        <div class="flow-card"><div class="step">03 Focus</div><span class="term">범위 좁히기</span><div class="desc">대상·기간·장소·변수·비교 기준을 한정</div></div>
+        <div class="flow-arrow">→</div>
+        <div class="flow-card"><div class="step">04 Evidence</div><span class="term">자료 확인</span><div class="desc">충분하고 신뢰할 만한 자료에 실제로 접근 가능한가?</div></div>
+        <div class="flow-arrow">→</div>
+        <div class="flow-card"><div class="step">05 RQ</div><span class="term">잠정 연구질문</span><div class="desc">분석·평가·종합을 요구하는 한 문장의 질문</div></div>
+      </div>
+      <div class="two-col" style="margin-top:25px; flex:0">
+        <div class="question-box"><div class="small" style="font-weight:800;color:var(--blue);margin-bottom:9px">QUESTION TEST</div><div class="question">“이 질문은 <span>명확하고, 집중되어 있으며, 논증 가능하고, 4,000단어 안에서</span> 답할 수 있는가?”</div></div>
+        <ul class="checklist card">
+          <li><strong>질문형</strong>으로 쓴다. 가설이나 연구 의도문이 아니다.</li>
+          <li>‘무엇’보다 <strong>how / why / to what extent</strong>가 분석을 더 잘 이끈다.</li>
+          <li>읽어 본 자료를 바탕으로 계속 수정한다. 질문 변경은 정상적인 연구 과정이다.</li>
+        </ul>
+      </div>
+      <div class="footer"><span>INTEREST → SUBJECT LENS → FOCUSED QUESTION</span><span>04</span></div>
+    </section>
+
+    <section class="slide" data-title="연구계획서">
+      <div class="eyebrow">05 · Your research proposal</div>
+      <div class="two-col">
+        <div>
+          <h2>연구계획서는<br>‘답’을 쓰는 문서가 아니라<br><span class="accent">탐구의 설계도</span>입니다.</h2>
+          <p class="lead">지금은 완벽한 결론보다, 무엇을 왜 어떻게 탐구할지를 분명히 보여 주는 것이 중요합니다. 좋은 계획서는 이후의 RRS, 자료 수집, 본문 구조를 이끕니다.</p>
+        </div>
+        <div class="proposal">
+          <div class="proposal-item"><div class="proposal-num">1</div><div><strong>Subject / pathway</strong><span>과목 또는 interdisciplinary pathway와 선택 이유</span></div></div>
+          <div class="proposal-item"><div class="proposal-num">2</div><div><strong>Topic &amp; rationale</strong><span>관심 주제와 구체적으로 좁힌 범위</span></div></div>
+          <div class="proposal-item"><div class="proposal-num">3</div><div><strong>Research problem</strong><span>무엇이 궁금하며, 왜 이 탐구가 필요한가</span></div></div>
+          <div class="proposal-item"><div class="proposal-num">4</div><div><strong>Provisional RQ</strong><span>현재 자료를 바탕으로 만든 잠정 연구질문</span></div></div>
+          <div class="proposal-item"><div class="proposal-num">5</div><div><strong>Concepts &amp; sources</strong><span>핵심 개념·이론, 찾아 본 선행 연구와 자료</span></div></div>
+          <div class="proposal-item"><div class="proposal-num">6</div><div><strong>Method, outline &amp; plan</strong><span>자료 수집·분석 방법, 예상 논증 구조와 일정</span></div></div>
+        </div>
+      </div>
+      <div class="footer"><span>PROVISIONAL DOES NOT MEAN CARELESS</span><span>05</span></div>
+    </section>
+
+    <section class="slide" data-title="글의 구조">
+      <div class="eyebrow">06 · Structure supports thinking</div>
+      <h2>EE의 구조는 정답 서식이 아니라,<br><span class="accent">연구질문에 답하는 논증의 길</span>입니다.</h2>
+      <div class="essay-map">
+        <article class="map-intro"><div class="map-label">Introduction</div><div class="map-title">왜, 무엇을, 어떻게?</div><ul class="map-list"><li>연구 맥락과 문제</li><li>명확한 연구질문</li><li>접근 방식·방법의 안내</li></ul></article>
+        <article class="map-body"><div class="map-label">Body · Line of argument</div><div class="map-title">근거를 분석하여 주장으로 연결</div><div class="cea"><span>Claim<br>주장</span><span>Evidence<br>근거</span><span>Analysis<br>해석</span><span>Link<br>질문과 연결</span></div><ul class="map-list" style="margin-top:14px"><li>각 단락은 연구질문에 답하는 하나의 역할을 맡는다.</li><li>자료를 나열하지 말고, 왜 그 자료가 중요한지 설명한다.</li><li>상반된 해석·한계도 검토하여 논증을 견고하게 만든다.</li></ul></article>
+        <article class="map-conclusion"><div class="map-label">Conclusion</div><div class="map-title">무엇을 알게 되었나?</div><ul class="map-list"><li>연구질문에 직접 답하기</li><li>발견을 종합하기</li><li>의의와 한계 평가하기</li></ul></article>
+      </div>
+      <div class="card soft-gold" style="margin-top:22px; z-index:1"><strong>핵심 원칙</strong> &nbsp; 결론에서 새로운 자료나 새로운 큰 주장을 꺼내지 않습니다. 본문에서 쌓은 근거를 <strong>종합</strong>하여 연구질문에 답합니다.</div>
+      <div class="footer"><span>CLAIM · EVIDENCE · ANALYSIS · LINK</span><span>06</span></div>
+    </section>
+
+    <section class="slide" data-title="평가 기준">
+      <div class="topline"><div class="eyebrow">07 · Assessment model</div><div class="total-badge">TOTAL 30 MARKS</div></div>
+      <h2>2027 EE 평가 기준: <span class="accent">5개 기준, 총 30점</span></h2>
+      <p class="lead">평가 기준은 마지막에만 보는 채점표가 아닙니다. 주제 선택, 자료 읽기, 개요 작성 때부터 사용하는 <strong>연구의 나침반</strong>입니다.</p>
+      <div class="criteria">
+        <article class="criterion"><div class="letter">A</div><h3>Framework<br>for the essay</h3><p>연구질문·방법·구조가 연구를 효과적으로 뒷받침하는가?</p><span class="points">6 marks</span></article>
+        <article class="criterion"><div class="letter">B</div><h3>Knowledge &amp;<br>understanding</h3><p>적절한 자료·용어·개념을 통해 과목 지식을 보여 주는가?</p><span class="points">6 marks</span></article>
+        <article class="criterion"><div class="letter">C</div><h3>Analysis &amp;<br>line of argument</h3><p>자료를 분석하고, 연구질문에서 결론까지 일관된 논증을 만드는가?</p><span class="points">6 marks</span></article>
+        <article class="criterion"><div class="letter">D</div><h3>Discussion &amp;<br>evaluation</h3><p>발견의 의미를 균형 있게 논의하고, 연구의 강점과 한계를 평가하는가?</p><span class="points">8 marks</span></article>
+        <article class="criterion"><div class="letter">E</div><h3>Reflection</h3><p>EE 경험이 학습자로서 나에게 남긴 변화와 전이를 평가하는가?</p><span class="points">4 marks</span></article>
+      </div>
+      <div class="footer"><span>A–D: ESSAY WHOLE · E: REFLECTIVE STATEMENT ON RPF</span><span>07</span></div>
+    </section>
+
+    <section class="slide" data-title="Criterion A">
+      <div class="eyebrow">08 · Criterion A</div>
+      <div class="criterion-detail">
+        <div class="criterion-icon"><div class="letter-large">A</div><h3>Framework for the essay · 6</h3><p>연구의 뼈대가 질문에 맞게 설계되었는가를 봅니다. ‘형식이 갖추어졌다’보다 <strong>질문·방법·구조의 연결</strong>이 중요합니다.</p></div>
+        <div>
+          <p class="detail-caption">핵심 질문 · 내 연구의 설계가 연구질문에 맞는가?</p>
+          <ul class="checklist"><li>연구질문이 주제와 관련 있고, 명확하며, 4,000단어 범위에서 <strong>집중되어 있는가?</strong></li><li>선택한 연구방법이 연구질문에 <strong>적합</strong>하고, 왜 그 방법을 쓰는지 설명했는가?</li><li>제목·인용·참고문헌·표·단락 구성 등 구조적 관례가 연구 내용을 <strong>읽기 쉽게</strong> 만드는가?</li></ul>
+          <div class="card soft-blue" style="margin-top:13px"><h3>학생용 한 줄 점검</h3><p>“이 질문에 답하려면, <strong>왜 이 방법</strong>으로, <strong>어떤 순서</strong>로 탐구해야 하는가?”를 설명할 수 있어야 합니다.</p></div>
+        </div>
+      </div>
+      <div class="footer"><span>QUESTION · METHOD · STRUCTURE</span><span>08</span></div>
+    </section>
+
+    <section class="slide" data-title="Criterion B">
+      <div class="eyebrow">09 · Criterion B</div>
+      <div class="criterion-detail">
+        <div class="criterion-icon mint"><div class="letter-large">B</div><h3>Knowledge &amp; understanding · 6</h3><p>좋은 자료를 폭넓게 고르고, 과목의 <strong>정확한 용어와 핵심 개념</strong>을 일관되게 사용하여 ‘이 분야를 이해하고 있다’는 것을 보여 줍니다.</p></div>
+        <div>
+          <p class="detail-caption">핵심 질문 · 이 주제를 다룰 과목 지식과 자료를 정확하게 이해하고 있는가?</p>
+          <ul class="checklist"><li>연구질문에 직접 도움이 되는 <strong>신뢰할 수 있는 자료</strong>를 선택했는가?</li><li>핵심 개념과 과목 용어를 <strong>정확한 의미</strong>로 사용하고, 필요할 때 설명했는가?</li><li>자료를 단순히 인용하지 않고, 그 자료가 어떤 맥락과 관점을 담는지 이해하고 있는가?</li></ul>
+          <div class="card soft-mint" style="margin-top:13px"><h3>학생용 한 줄 점검</h3><p>“이 용어와 자료가 <strong>왜 내 연구질문에 필요한지</strong>”를 내 말로 설명할 수 있어야 합니다.</p></div>
+        </div>
+      </div>
+      <div class="footer"><span>MATERIALS · TERMS · CONCEPTS</span><span>09</span></div>
+    </section>
+
+    <section class="slide" data-title="Criterion C">
+      <div class="eyebrow">10 · Criterion C</div>
+      <div class="criterion-detail">
+        <div class="criterion-icon alt"><div class="letter-large">C</div><h3>Analysis &amp; line of argument · 6</h3><p>자료를 <strong>설명하는 글</strong>을 넘어, 자료에서 의미 있는 발견을 만들고 연구질문–발견–결론을 하나의 논증으로 연결합니다.</p></div>
+        <div>
+          <p class="detail-caption">핵심 질문 · 그래서 자료가 무엇을 말하는가?</p>
+          <ul class="checklist"><li>자료의 특징·관계·패턴을 <strong>해석</strong>하고, 단순 요약에서 멈추지 않았는가?</li><li>각 단락의 분석이 연구질문에 대한 답으로 <strong>이어지는가?</strong></li><li>처음의 주장부터 결론까지 <strong>명확하고 지속적인 line of argument</strong>가 있는가?</li></ul>
+          <div class="card soft-violet" style="margin-top:13px"><h3>학생용 한 줄 점검</h3><p>문단마다 “이 근거는 <strong>내 주장에 무엇을 더해 주는가?</strong>”를 한 문장으로 답할 수 있어야 합니다.</p></div>
+        </div>
+      </div>
+      <div class="footer"><span>ANALYSE → ARGUE</span><span>10</span></div>
+    </section>
+
+    <section class="slide" data-title="Criterion D">
+      <div class="eyebrow">11 · Criterion D</div>
+      <div class="criterion-detail">
+        <div class="criterion-icon gold"><div class="letter-large">D</div><h3>Discussion &amp; evaluation · 8</h3><p>발견의 의미를 <strong>균형 있게 논의</strong>하고, 다른 관점·반례·연구의 강점과 제한점을 근거로 평가합니다. 새 기준에서 가장 큰 8점입니다.</p></div>
+        <div>
+          <p class="detail-caption">핵심 질문 · 그 발견은 왜 중요하며, 어디까지 믿을 수 있는가?</p>
+          <ul class="checklist"><li>발견이 연구질문과 더 넓은 맥락에서 갖는 <strong>의미</strong>를 논의했는가?</li><li>다른 관점·반례·상반된 해석을 검토하여 논의를 <strong>균형 있게</strong> 만들었는가?</li><li>자료·방법·범위의 강점과 제한점을, 근거를 들어 <strong>평가</strong>했는가?</li></ul>
+          <div class="card soft-gold" style="margin-top:13px"><h3>학생용 한 줄 점검</h3><p>“내 결론은 <strong>어디까지 말할 수 있고, 무엇은 아직 말할 수 없는가?</strong>”를 구분할 수 있어야 합니다.</p></div>
+        </div>
+      </div>
+      <div class="footer"><span>DISCUSS → EVALUATE</span><span>11</span></div>
+    </section>
+
+    <section class="slide" data-title="성찰">
+      <div class="eyebrow">12 · Criterion E · Reflection</div>
+      <div class="reflection-grid">
+        <div class="reflection-wheel"><div><strong>3 + 500</strong><span>3 mandatory sessions<br>+ final reflective statement<br>(maximum 500 words)</span></div></div>
+        <div>
+          <h2>성찰은 ‘과정 보고’가 아니라<br><span class="coral-text">학습의 영향</span>을 평가하는 글입니다.</h2>
+          <p class="lead">최종 reflective statement는 RPF에 작성합니다. “무엇을 했다”에 머무르지 말고, 선택과 변화가 나의 학습 방식에 어떤 영향을 주었는지 구체적 사례로 설명합니다.</p>
+          <div class="reflection-steps">
+            <div class="reflection-step"><div class="bubble">1</div><div class="content"><strong>결정과 계기</strong>어떤 선택·문제·예상 밖의 발견이 있었는가?</div></div>
+            <div class="reflection-step"><div class="bubble">2</div><div class="content"><strong>판단의 변화</strong>무엇을 새롭게 이해했고, 왜 접근·질문·방법을 바꾸었는가?</div></div>
+            <div class="reflection-step"><div class="bubble">3</div><div class="content"><strong>성장과 전이</strong>배운 연구·사고·자기관리 기술을 다른 현재·미래 상황에 어떻게 쓸 것인가?</div></div>
+          </div>
+        </div>
+      </div>
+      <div class="footer"><span>DESCRIBE LESS · EVALUATE MORE · USE SPECIFIC EXAMPLES</span><span>12</span></div>
+    </section>
+
+    <section class="slide" data-title="학문적 성실성">
+      <div class="eyebrow">13 · Academic integrity &amp; AI</div>
+      <h2>AI는 <span class="mint-text">학습을 돕는 도구</span>일 수 있지만,<br>나의 연구자 역할을 <span class="coral-text">대신할 수는 없습니다.</span></h2>
+      <div class="traffic">
+        <article class="traffic-card"><div class="traffic-light"></div><h3>가능한 사용</h3><p>키워드·대안 관점 찾기의 출발점으로 활용하고, <b>원문 자료를 직접 읽고 검증</b>한 뒤 나의 말과 판단으로 발전시키기</p></article>
+        <article class="traffic-card"><div class="traffic-light"></div><h3>주의해서 사용</h3><p>문법·표현 점검, 구조 템플릿, 자료 비교·평가. 학교 방침을 확인하고, 결과물이 <b>논증의 내용이나 사고를 바꾸지 않도록</b> 기록 남기기</p></article>
+        <article class="traffic-card"><div class="traffic-light"></div><h3>제출에 사용하면 안 됨</h3><p>AI가 만든 연구질문을 그대로 채택하기, 문단·에세이·번역·성찰을 만들어 제출하기, 출처·인용을 확인하지 않고 AI 답변 사용하기</p></article>
+      </div>
+      <div class="card soft-coral" style="margin-top:16px; z-index:1"><strong>투명성의 원칙</strong> &nbsp; AI가 생성한 텍스트·이미지 등 결과물을 최종 작업에 사용했다면 AI 도구를 본문과 참고문헌에 명시하고, 사용한 prompt와 생성일을 기록합니다. 내용은 반드시 다른 신뢰 가능한 자료로 검증합니다.</div>
+      <div class="footer"><span>LEARN WITH AI · DO NOT SUBMIT AI AS YOURSELF</span><span>13</span></div>
+    </section>
+
+    <section class="slide" data-title="기록 도구">
+      <div class="eyebrow">14 · Keep evidence of your process</div>
+      <h2>RRS와 RPF를 구분하면,<br><span class="accent">연구 과정</span>이 보이고 <span class="coral-text">성찰</span>도 깊어집니다.</h2>
+      <div class="compare">
+        <article class="compare-card"><div class="top"><span class="abbr">RRS</span><strong>Researcher’s Reflection Space</strong></div><p>연구자의 개인 작업 공간입니다. 공식 제출 서식이라기보다, 탐구의 흔적을 남기고 생각을 발전시키는 기록장입니다.</p><ul><li>읽은 자료와 핵심 인용·서지 정보</li><li>나의 생각, 의문, 결정과 그 이유</li><li>주제·질문·방법이 바뀐 과정</li><li>AI 사용, 초안, 피드백 이후 변화</li></ul></article>
+        <article class="compare-card"><div class="top"><span class="abbr">RPF</span><strong>Reflection and Progress Form</strong></div><p>EE와 함께 제출되는 공식 성찰·진도 기록입니다. 세 차례 필수 성찰 세션 참석과 최종 reflective statement를 담습니다.</p><ul><li>지도교사와의 <strong>3회 필수 성찰 세션</strong></li><li>마지막 세션은 viva voce</li><li>최종 reflective statement: <strong>최대 500단어</strong></li><li>에세이와 같은 언어로 작성·제출</li></ul></article>
+      </div>
+      <div class="note-band">좋은 기록은 ‘나중에 쓸 성찰의 재료’이면서 동시에, 내가 실제로 탐구하고 글을 발전시켰음을 보여 주는 가장 확실한 증거입니다.</div>
+      <div class="footer"><span>RRS = ONGOING THINKING · RPF = OFFICIAL REFLECTION RECORD</span><span>14</span></div>
+    </section>
+
+    <section class="slide" data-title="지도와 책임">
+      <div class="eyebrow">15 · Support without substitution</div>
+      <h2>지도교사는 방향을 비추고,<br>학생은 <span class="accent">탐구와 글쓰기의 주인</span>입니다.</h2>
+      <div class="responsibility">
+        <article class="side"><h3>지도교사가 할 수 있는 일</h3><ul><li>과목·주제·연구질문·방법의 적합성 논의</li><li>자료 탐색, 인용, 윤리·안전, 일정에 대한 조언</li><li>정기적인 check-in과 3회 성찰 세션 진행</li><li>한 번의 완성 초안에 의견 제시 <em>(direct editing은 하지 않음)</em></li></ul><div class="rule">최종 에세이는 viva voce 전에 제출하며, 이후에는 내용 변경을 하지 않습니다.</div></article>
+        <article class="side student"><h3>학생이 책임질 일</h3><ul><li>RRS를 유지하며 결정·출처·변화를 기록하기</li><li>연구질문과 방법을 스스로 판단하고 수정하기</li><li>출처를 쓰는 동안 인용하고 참고문헌을 누적하기</li><li>질문·토론에서 자신의 연구를 설명할 수 있을 만큼 이해하기</li></ul><div class="rule" style="background:#e5f4ff;color:#245b92">EE는 도움을 받을 수 있는 과제이지만, 다른 사람이 대신 완성해 주는 과제가 아닙니다.</div></article>
+      </div>
+      <div class="footer"><span>SUPERVISION SUPPORTS INDEPENDENCE</span><span>15</span></div>
+    </section>
+
+    <section class="slide finish" data-title="시작하기">
+      <div class="eyebrow">16 · Start your inquiry</div>
+      <div class="two-col">
+        <div>
+          <h2>이제, 좋은 답을 찾기 전에<br><span class="accent">좋은 질문을 준비합시다.</span></h2>
+          <p class="lead">이번 수업에서 가장 중요한 것은 ‘멋져 보이는 주제’가 아니라, 내가 끝까지 읽고 생각하며 발전시킬 수 있는 탐구의 출발점을 찾는 일입니다.</p>
+          <div class="card soft-mint" style="margin-top:22px"><strong>오늘의 첫 기록</strong><br><span class="small">내가 계속 궁금했던 것 / 연결할 수 있는 DP 과목 / 찾아 보고 싶은 자료 / 아직 답하지 못한 질문을 RRS에 적어 봅시다.</span></div>
+        </div>
+        <aside class="next-card"><h3>수업 후반부까지의 목표</h3><ol><li>관심 분야를 한 문장으로 정리한다.</li><li>과목의 개념·텍스트·방법과 연결한다.</li><li>선행 자료를 읽어 잠정 연구질문을 만든다.</li><li>방법·개요·일정을 포함한 Research Proposal을 완성한다.</li></ol></aside>
+      </div>
+      <div class="spacer"></div>
+      <div class="card" style="z-index:1; padding:14px 17px"><strong style="font-size:var(--body-min)">자료 기준</strong><ul class="source-list"><li>International Baccalaureate. <a href="https://ibo.org/globalassets/new-structure/university-admission/pdfs/subject-guides/extended-essay-first-assessment-2027-guide-sbs.pdf" target="_blank" rel="noopener">Extended essay guide: First assessment 2027</a> (2025), pp. 13, 83–85, 94, 97–100, 103–113.</li><li>「(2026-여름) 방과후학교 수업계획서: Understanding Research Paper」의 20차시 수업 흐름을 반영함.</li></ul></div>
+      <div class="footer"><span>BEGIN WITH CURIOSITY, CONTINUE WITH EVIDENCE</span><span>16</span></div>
+    </section>
+
+    <nav class="slide-nav" aria-label="슬라이드 선택"></nav>
+    <div class="controls" aria-label="슬라이드 이동"><button type="button" id="prev" aria-label="이전 슬라이드">‹</button><button type="button" id="next" aria-label="다음 슬라이드">›</button></div>
+  </main>
+  <script>
+    (() => {
+      const slides = [...document.querySelectorAll('.slide')];
+      const nav = document.querySelector('.slide-nav');
+      let current = 0;
+      const update = (index) => {
+        current = (index + slides.length) % slides.length;
+        slides.forEach((slide, i) => slide.classList.toggle('active', i === current));
+        document.querySelectorAll('.slide-nav button').forEach((button, i) => button.classList.toggle('active', i === current));
+        document.title = `${slides[current].dataset.title} | Extended Essay Student Guide 2027`;
+      };
+      slides.forEach((slide, index) => {
+        const button = document.createElement('button');
+        button.type = 'button'; button.title = `${index + 1}. ${slide.dataset.title}`; button.setAttribute('aria-label', button.title);
+        button.addEventListener('click', () => update(index)); nav.appendChild(button);
+        const footer = slide.querySelector('.footer');
+        if (footer) {
+          const progress = document.createElement('span'); progress.className = 'progress'; progress.setAttribute('aria-hidden', 'true');
+          slides.forEach((_, i) => { const bar = document.createElement('i'); bar.className = `bar${i === index ? ' on' : ''}`; progress.appendChild(bar); });
+          footer.insertBefore(progress, footer.children[1]);
+        }
+      });
+      document.getElementById('prev').addEventListener('click', () => update(current - 1));
+      document.getElementById('next').addEventListener('click', () => update(current + 1));
+      window.addEventListener('keydown', (event) => {
+        if (['ArrowRight', 'PageDown', ' '].includes(event.key)) { event.preventDefault(); update(current + 1); }
+        if (['ArrowLeft', 'PageUp'].includes(event.key)) { event.preventDefault(); update(current - 1); }
+        if (event.key === 'Home') update(0);
+        if (event.key === 'End') update(slides.length - 1);
+      });
+      update(0);
+    })();
+  </script>
+</body>
+</html>
