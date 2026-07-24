@@ -32,11 +32,52 @@
       <span id="statusMsg" style="font-size:12.5px;"></span>
     </div>
 
-    <div class="section-title" style="font-size:14px; font-weight:700; color:var(--ink); margin:0 0 10px;">Step 1 · 개별 작성</div>
-    <p style="font-size:13px; color:var(--ink-soft); margin:0 0 12px;">소재 후보: Artificial Intelligence and Education / Climate Crisis and Consumption Habits / Video Games and Youth Culture / 자유 선택</p>
+    <div class="section-title" style="font-size:14px; font-weight:700; color:var(--ink); margin:0 0 10px;">개념 설명</div>
+    <p style="font-size:13.5px; line-height:1.7; margin:0 0 10px;">
+      Topic Sentence(주제문)는 한 단락에서 가장 중요한 문장으로, 그 단락이 무엇에 관한 것인지를
+      알려줍니다. Topic Sentence는 두 부분으로 이루어집니다 — <strong>Topic</strong>(내가 쓰려는 대상,
+      소재 그 자체)과 <strong>Controlling Idea</strong>(그 소재 중에서 내가 다루려는 특정 측면)입니다.
+    </p>
+    <p style="font-size:13.5px; line-height:1.7; margin:0 0 10px;">
+      예를 들어 "New York has excellent public transportation."이라는 문장에서 Topic은 New York,
+      Controlling Idea는 "훌륭한 대중교통"입니다. 같은 New York이라도 "New York has interesting
+      people."처럼 Controlling Idea를 바꾸면 완전히 다른 단락이 됩니다 — 하나의 Topic에는 여러
+      Controlling Idea가 있을 수 있습니다.
+    </p>
+    <p style="font-size:13.5px; line-height:1.7; margin:0 0 16px;">
+      중요한 원칙: <strong>모든 Topic Sentence는 "의견(opinion)"이어야 합니다.</strong> 단순한 사실
+      진술은 Topic Sentence가 될 수 없습니다. 예를 들어 "My brother is older than I am."(형이 나보다
+      나이가 많다)은 참/거짓만 있을 뿐 더 쓸 내용이 없어 Topic Sentence가 될 수 없지만, "My brother
+      is a good family man."(형은 좋은 가장이다)은 왜 그런지 예를 들어 뒷받침할 수 있으므로 좋은
+      Topic Sentence입니다.
+    </p>
 
-    <div class="field-label">선택한 소재</div>
-    <input type="text" id="mySubject" class="field-input">
+    <div class="section-title" style="font-size:14px; font-weight:700; color:var(--ink); margin:0 0 10px;">좋은 Topic Sentence 판별하기</div>
+    <table style="width:100%; border-collapse:collapse; font-size:13px; margin-bottom:16px;">
+      <tr><th style="background:var(--ink); color:#fff; text-align:left; padding:8px;">유형</th><th style="background:var(--ink); color:#fff; text-align:left; padding:8px;">예시</th><th style="background:var(--ink); color:#fff; text-align:left; padding:8px;">문제점</th></tr>
+      <tr><td style="padding:7px 8px; border-bottom:1px solid var(--line);">너무 일반적</td><td style="padding:7px 8px; border-bottom:1px solid var(--line);">A job is part of life.</td><td style="padding:7px 8px; border-bottom:1px solid var(--line);">Controlling Idea가 없어서 이 단락이 직업에 대해 무엇을 말할지 전혀 알 수 없음</td></tr>
+      <tr><td style="padding:7px 8px; border-bottom:1px solid var(--line);">너무 구체적</td><td style="padding:7px 8px; border-bottom:1px solid var(--line);">An increasing number of people in the U.S. work 50 hours a week.</td><td style="padding:7px 8px; border-bottom:1px solid var(--line);">단락 뒷부분에 나와야 할 세부 내용을 이미 다 말해버림</td></tr>
+      <tr><td style="padding:7px 8px;">좋은 예</td><td style="padding:7px 8px;">The number of hours that Americans work each week has changed in the past 30 years.</td><td style="padding:7px 8px;">단락이 무엇을 다룰지 힌트는 주지만 세부 내용은 남겨둠</td></tr>
+    </table>
+
+    <div class="section-title" style="font-size:14px; font-weight:700; color:var(--ink); margin:0 0 10px;">Step 1 · 개별 작성</div>
+    <p style="font-size:13px; color:var(--ink-soft); margin:0 0 12px;">아래 문장에서 Topic에는 밑줄, Controlling Idea에는 괄호를 표시하듯 적어보세요.</p>
+
+    <div class="field-label">1. There are many tourist attractions in San Francisco.</div>
+    <input type="text" id="ex1_1" class="field-input" placeholder="Topic: ___ / Controlling Idea: ___">
+    <div class="field-label">2. People who want to learn a foreign language must master four skill areas.</div>
+    <input type="text" id="ex1_2" class="field-input" placeholder="Topic: ___ / Controlling Idea: ___">
+    <div class="field-label">3. The California condor must be saved from extinction.</div>
+    <input type="text" id="ex1_3" class="field-input" placeholder="Topic: ___ / Controlling Idea: ___">
+
+    <p style="font-size:13px; color:var(--ink-soft); margin:20px 0 12px;">아래 topic과 목적(purpose)에 맞는 Topic Sentence를 직접 써보세요. (교재 Exercise 2)</p>
+    <div class="field-label">Topic: CIGARETTE SMOKING / Purpose: to warn others</div>
+    <input type="text" id="ts_smoking" class="field-input">
+    <div class="field-label">Topic: TELEVISION / Purpose: to divide programs into types</div>
+    <input type="text" id="ts_tv" class="field-input">
+
+    <div class="field-label">선택한 소재로 나만의 Topic 문장 만들어보기</div>
+    <input type="text" id="mySubject" class="field-input" placeholder="Artificial Intelligence and Education / Climate Crisis and Consumption Habits / Video Games and Youth Culture / 자유 선택">
 
     <div class="field-label">Topic</div>
     <textarea id="myTopic" rows="2" class="field-input"></textarea>
@@ -78,7 +119,7 @@
   <script>
     const DAY = 2;
     const FORM_ID = "day2-1-topic-controlling-idea-warmup";
-    const FIELD_IDS = ["mySubject","myTopic","myControllingIdea","peer1Name","peer1Note","peer2Name","peer2Note"];
+    const FIELD_IDS = ["ex1_1","ex1_2","ex1_3","ts_smoking","ts_tv","mySubject","myTopic","myControllingIdea","peer1Name","peer1Note","peer2Name","peer2Note"];
 
     function collectData(){
       const data = {};

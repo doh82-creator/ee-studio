@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Problem Recognition</title>
+<title>Research Problem</title>
 <link rel="stylesheet" href="../assets/form.css">
 <style>
   .field-label{font-size:12.5px; color:var(--ink-soft); margin:12px 0 4px; font-weight:700;}
@@ -13,14 +13,14 @@
 <body>
   <div class="site-topbar">
     <div class="brand">EE Research Studio</div>
-    <div><a href="../index.html">Home</a> &nbsp;/&nbsp; <a href="../days/day3.html">Day 3</a> &nbsp;/&nbsp; Problem Recognition</div>
+    <div><a href="../index.html">Home</a> &nbsp;/&nbsp; <a href="../days/day3.html">Day 3</a> &nbsp;/&nbsp; Research Problem</div>
   </div>
 
   <div class="wrap">
   <div class="sheet">
     <span class="hw-tag">메인 활동 · 이어서 Day 4 전까지 완성 (Homework)</span>
-    <h1>Problem Recognition</h1>
-    <div class="sub">Day 3 · Problem Recognition</div>
+    <h1>Research Problem</h1>
+    <div class="sub">Day 3 · Research Problem</div>
 
     <div class="lede">
       Topic만으로는 연구가 되지 않습니다. "왜 지금, 이 topic을 들여다볼 가치가 있는가"에 대한
@@ -36,6 +36,22 @@
       <span id="statusMsg" style="font-size:12.5px;"></span>
     </div>
 
+    <div class="section-title" style="font-size:14px; font-weight:700; color:var(--ink); margin:0 0 10px;">Research Paper Introduction의 공식 구조</div>
+    <p style="font-size:13.5px; line-height:1.7; margin:0 0 10px;">
+      연구계획서의 Introduction은 다음 순서로 구성됩니다. 오늘 Day 3에서는 이 중
+      <strong>①주제설정의 배경</strong>과 <strong>②연구자의 문제인식</strong>을 다룹니다 — 나머지는
+      Day 5~6에서 이어집니다.
+    </p>
+    <table style="width:100%; border-collapse:collapse; font-size:13px; margin-bottom:16px;">
+      <tr><th style="background:var(--ink); color:#fff; text-align:left; padding:8px; width:36px;">순서</th><th style="background:var(--ink); color:#fff; text-align:left; padding:8px;">요소</th><th style="background:var(--ink); color:#fff; text-align:left; padding:8px;">진행 시점</th></tr>
+      <tr><td style="padding:7px 8px; border-bottom:1px solid var(--line);">①</td><td style="padding:7px 8px; border-bottom:1px solid var(--line);">주제설정의 배경</td><td style="padding:7px 8px; border-bottom:1px solid var(--line);">Day 2~3 (오늘)</td></tr>
+      <tr><td style="padding:7px 8px; border-bottom:1px solid var(--line);">②</td><td style="padding:7px 8px; border-bottom:1px solid var(--line);">연구자의 문제인식 (research problem)</td><td style="padding:7px 8px; border-bottom:1px solid var(--line);">Day 3 (오늘)</td></tr>
+      <tr><td style="padding:7px 8px; border-bottom:1px solid var(--line);">-</td><td style="padding:7px 8px; border-bottom:1px solid var(--line);">이론이나 개념 설명 <span style="color:var(--ink-soft);">— 내 연구가 어느 부분에 주목하는지</span></td><td style="padding:7px 8px; border-bottom:1px solid var(--line);">Day 6 (롤모델 분석과 함께)</td></tr>
+      <tr><td style="padding:7px 8px; border-bottom:1px solid var(--line);">-</td><td style="padding:7px 8px; border-bottom:1px solid var(--line);">선행연구 분석 결과 <span style="color:var(--ink-soft);">— 주제의 중요성·차별성</span></td><td style="padding:7px 8px; border-bottom:1px solid var(--line);">Day 6~7</td></tr>
+      <tr><td style="padding:7px 8px; border-bottom:1px solid var(--line);">③</td><td style="padding:7px 8px; border-bottom:1px solid var(--line);">연구목적</td><td style="padding:7px 8px; border-bottom:1px solid var(--line);">Day 5</td></tr>
+      <tr><td style="padding:7px 8px;">④</td><td style="padding:7px 8px;">연구질문 (research question)</td><td style="padding:7px 8px;">Day 6</td></tr>
+    </table>
+
     <div class="section-title" style="font-size:14px; font-weight:700; color:var(--ink); margin:0 0 10px;">문제 인식을 찾는 3가지 질문</div>
     <table style="width:100%; border-collapse:collapse; font-size:13px; margin-bottom:16px;">
       <tr><th style="background:var(--ink); color:#fff; text-align:left; padding:8px;">유형</th><th style="background:var(--ink); color:#fff; text-align:left; padding:8px;">질문</th></tr>
@@ -49,7 +65,10 @@
     <div class="field-label">나의 Topic (Day 2에서 가져오기)</div>
     <input type="text" id="myTopic" class="field-input">
 
-    <div class="field-label">유형 (Gap / Tension / Controversy)</div>
+    <div class="field-label">① 주제설정의 배경 — 왜 이 topic에 관심을 갖게 되었는가?</div>
+    <textarea id="topicBackground" rows="2" class="field-input"></textarea>
+
+    <div class="field-label">② 유형 (Gap / Tension / Controversy)</div>
     <select id="problemType" class="field-input">
       <option value="">선택하세요</option>
       <option value="gap">Gap</option>
@@ -79,7 +98,7 @@
   <script>
     const DAY = 3;
     const FORM_ID = "day3-2-problem-recognition";
-    const FIELD_IDS = ["myTopic","problemType","problemStatement","whyNow"];
+    const FIELD_IDS = ["myTopic","topicBackground","problemType","problemStatement","whyNow"];
 
     function collectData(){
       const data = {};
