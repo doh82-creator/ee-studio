@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Problem Recognition</title>
+<link rel="stylesheet" href="../assets/form.css">
+<style>
+  .field-label{font-size:12.5px; color:var(--ink-soft); margin:12px 0 4px; font-weight:700;}
+  .field-input{width:100%; padding:8px 10px; border:1px solid var(--line-strong); border-radius:4px; font-size:13.5px; font-family:inherit;}
+</style>
+</head>
+<body>
+  <div class="site-topbar">
+    <div class="brand">EE Research Studio</div>
+    <div><a href="../index.html">Home</a> &nbsp;/&nbsp; <a href="../days/day3.html">Day 3</a> &nbsp;/&nbsp; Problem Recognition</div>
+  </div>
+
+  <div class="wrap">
+  <div class="sheet">
+    <span class="hw-tag">메인 활동 · 이어서 Day 4 전까지 완성 (Homework)</span>
+    <h1>Problem Recognition</h1>
+    <div class="sub">Day 3 · Problem Recognition</div>
+
+    <div class="lede">
+      Topic만으로는 연구가 되지 않습니다. "왜 지금, 이 topic을 들여다볼 가치가 있는가"에 대한
+      답 — 문제 인식(problem recognition)이 있어야 연구목적과 연구질문으로 이어집니다.
+    </div>
+
+    <div class="code-box">
+      <label>학번</label>
+      <input type="text" id="studentId" placeholder="예: 20301">
+      <label>비밀번호(4자리)</label>
+      <input type="password" id="studentPin" maxlength="4" placeholder="••••">
+      <button id="verifyBtn">확인</button>
+      <span id="statusMsg" style="font-size:12.5px;"></span>
+    </div>
+
+    <div class="section-title" style="font-size:14px; font-weight:700; color:var(--ink); margin:0 0 10px;">문제 인식을 찾는 3가지 질문</div>
+    <table style="width:100%; border-collapse:collapse; font-size:13px; margin-bottom:16px;">
+      <tr><th style="background:var(--ink); color:#fff; text-align:left; padding:8px;">유형</th><th style="background:var(--ink); color:#fff; text-align:left; padding:8px;">질문</th></tr>
+      <tr><td style="padding:7px 8px; border-bottom:1px solid var(--line);">Gap (공백)</td><td style="padding:7px 8px; border-bottom:1px solid var(--line);">아직 충분히 다뤄지지 않은 부분은 무엇인가?</td></tr>
+      <tr><td style="padding:7px 8px; border-bottom:1px solid var(--line);">Tension (긴장)</td><td style="padding:7px 8px; border-bottom:1px solid var(--line);">서로 다른 자료·의견·현상이 부딪히는 지점이 있는가?</td></tr>
+      <tr><td style="padding:7px 8px;">Controversy (논쟁)</td><td style="padding:7px 8px;">사람들이 의견을 달리하는 지점은 무엇인가?</td></tr>
+    </table>
+
+    <div class="section-title" style="font-size:14px; font-weight:700; color:var(--ink); margin:20px 0 10px;">직접 해보기</div>
+
+    <div class="field-label">나의 Topic (Day 2에서 가져오기)</div>
+    <input type="text" id="myTopic" class="field-input">
+
+    <div class="field-label">유형 (Gap / Tension / Controversy)</div>
+    <select id="problemType" class="field-input">
+      <option value="">선택하세요</option>
+      <option value="gap">Gap</option>
+      <option value="tension">Tension</option>
+      <option value="controversy">Controversy</option>
+    </select>
+
+    <div class="field-label">문제 인식 서술</div>
+    <textarea id="problemStatement" rows="3" class="field-input"></textarea>
+
+    <div class="field-label">이것이 왜 "지금" 다룰 가치가 있는가?</div>
+    <textarea id="whyNow" rows="3" class="field-input"></textarea>
+
+    <div style="margin-top:24px; display:flex; align-items:center; gap:12px;">
+      <button id="saveBtn" style="padding:10px 20px; background:var(--accent); color:#fff; border:none; border-radius:5px; font-weight:700; font-size:14px; cursor:pointer;">저장하기</button>
+      <span id="saveStatus" style="font-size:12.5px;"></span>
+    </div>
+
+    <div class="lede" style="margin-top:26px;">
+      오늘 찾은 문제 인식이 그대로 Day 4까지의 과제가 됩니다. Day 4에서는 이를 뒷받침할 자료를
+      탐색합니다.
+    </div>
+  </div>
+  </div>
+
+  <script src="../assets/app.js"></script>
+  <script>
+    const DAY = 3;
+    const FORM_ID = "day3-2-problem-recognition";
+    const FIELD_IDS = ["myTopic","problemType","problemStatement","whyNow"];
+
+    function collectData(){
+      const data = {};
+      FIELD_IDS.forEach(id => data[id] = document.getElementById(id).value);
+      return data;
+    }
+    function populateData(data){
+      if(!data) return;
+      FIELD_IDS.forEach(id => { const el = document.getElementById(id); if(el) el.value = data[id] || ""; });
+    }
+
+    const savedAuth = ee_getSavedAuth();
+    if(savedAuth.id) document.getElementById("studentId").value = savedAuth.id;
+    if(savedAuth.pin) document.getElementById("studentPin").value = savedAuth.pin;
+
+    async function doVerifyAndLoad(){
+      const id = document.getElementById("studentId").value.trim();
+      const pin = document.getElementById("studentPin").value.trim();
+      if(!id || !pin){ ee_setStatus(document.getElementById("statusMsg"), "학번과 비밀번호를 입력해주세요.", true); return; }
+      const result = await ee_verify(id, pin, document.getElementById("statusMsg"));
+      if(result.ok){
+        const data = await ee_loadResponse(DAY, FORM_ID, document.getElementById("statusMsg"));
+        if(data) populateData(data);
+      }
+    }
+    document.getElementById("verifyBtn").addEventListener("click", doVerifyAndLoad);
+    if(savedAuth.id && savedAuth.pin) doVerifyAndLoad();
+
+    document.getElementById("saveBtn").addEventListener("click", async ()=>{
+      const { id, pin } = ee_getSavedAuth();
+      if(!id || !pin){ ee_setStatus(document.getElementById("saveStatus"), "먼저 위에서 학번/비밀번호 확인을 눌러주세요.", true); return; }
+      const data = collectData();
+      await ee_saveResponse(DAY, FORM_ID, data, document.getElementById("saveStatus"));
+    });
+  </script>
+</body>
+</html>

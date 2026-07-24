@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Role Model Paper Analysis — Day 5~9</title>
+<link rel="stylesheet" href="../assets/form.css">
+<style>
+  .day-label{display:inline-block; background:var(--ink); color:#fff; font-size:11px; font-weight:700; letter-spacing:1px; text-transform:uppercase; padding:4px 10px; border-radius:3px; margin:26px 0 10px;}
+  .day-label:first-of-type{margin-top:0;}
+  .field-label{font-size:12.5px; color:var(--ink-soft); margin:10px 0 4px; font-weight:700;}
+  .field-input{width:100%; padding:8px 10px; border:1px solid var(--line-strong); border-radius:4px; font-size:13.5px; font-family:inherit;}
+  .otc-grid{display:grid; grid-template-columns:1fr 1fr 1fr; gap:14px;}
+  .otc-grid > div{display:flex; flex-direction:column;}
+  @media (max-width:700px){ .otc-grid{grid-template-columns:1fr;} }
+</style>
+</head>
+<body>
+  <div class="site-topbar">
+    <div class="brand">EE Research Studio</div>
+    <div><a href="../index.html">Home</a> &nbsp;/&nbsp; Role Model Paper Analysis</div>
+  </div>
+
+  <div class="wrap">
+  <div class="sheet">
+    <span class="hw-tag">Day 5 ~ Day 9 — 이어서 작성</span>
+    <h1>Role Model Paper Analysis</h1>
+    <div class="sub">내가 고른 롤모델 논문을 매일 조금씩 뜯어보며, 내 프로포절에 적용할 점을 찾습니다.</div>
+
+    <div class="lede">
+      Day 5부터 Day 9까지 이 한 장에 이어서 작성합니다. 학번+비밀번호로 접속하면 이전에 쓴
+      내용이 그대로 불러와지니, 오늘 해당하는 Day 섹션만 채우면 됩니다. 각 항목은
+      <strong>관찰(롤모델은 어떻게 썼나) → 분석(왜 그렇게 썼을까) → 적용(내 프로포절엔 어떻게)</strong>
+      순서로 씁니다.
+    </div>
+
+    <div class="code-box">
+      <label>학번</label>
+      <input type="text" id="studentId" placeholder="예: 20301">
+      <label>비밀번호(4자리)</label>
+      <input type="password" id="studentPin" maxlength="4" placeholder="••••">
+      <button id="verifyBtn">확인</button>
+      <span id="statusMsg" style="font-size:12.5px;"></span>
+    </div>
+
+    <div class="day-label">Day 5 · 서지정보 &amp; 선정 이유</div>
+    <div class="field-label">논문 제목 / 저자 / 출처 / 발행연도</div>
+    <input class="field-input" id="biblio">
+    <div class="field-label">이 논문을 고른 이유 (내 topic과의 관련성)</div>
+    <textarea class="field-input" id="whyChosen" rows="2"></textarea>
+
+    <div class="day-label">Day 5 · 전체 목차 구조</div>
+    <div class="field-label">목차를 그대로 옮겨 적기</div>
+    <textarea class="field-input" id="tocObserve" rows="2"></textarea>
+    <div class="field-label">각 섹션이 대략 몇 %씩 분량을 차지하는가</div>
+    <textarea class="field-input" id="tocAnalyze" rows="2"></textarea>
+    <div class="field-label">적용 — 내 프로포절엔 어떤 섹션이 필요할까</div>
+    <textarea class="field-input" id="tocApply" rows="2"></textarea>
+
+    <div class="day-label">Day 5 · 서론 (연구배경 · 목적)</div>
+    <div class="field-label">관찰 — 서론이 몇 문단, 어떤 순서로 전개되는가</div>
+    <textarea class="field-input" id="introObserve" rows="2"></textarea>
+    <div class="field-label">분석 — 배경→gap→목적의 흐름이 뚜렷한가</div>
+    <textarea class="field-input" id="introAnalyze" rows="2"></textarea>
+    <div class="field-label">적용 — 내 Research Purpose 초안에 참고할 점 1가지</div>
+    <textarea class="field-input" id="introApply" rows="2"></textarea>
+
+    <div class="day-label">Day 6 · 이론적 배경</div>
+    <div class="field-label">관찰 — 어떤 개념/이론을 인용했는가</div>
+    <textarea class="field-input" id="theoryObserve" rows="2"></textarea>
+    <div class="field-label">분석 — 이론이 RQ와 어떻게 연결되는가</div>
+    <textarea class="field-input" id="theoryAnalyze" rows="2"></textarea>
+    <div class="field-label">적용 — 내 연구에 필요한 이론적 틀 후보</div>
+    <textarea class="field-input" id="theoryApply" rows="2"></textarea>
+
+    <div class="day-label">Day 6 · 분석 틀</div>
+    <div class="field-label">관찰 — 표/그림으로 제시했는가, 글로만 설명했는가</div>
+    <textarea class="field-input" id="frameworkObserve" rows="2"></textarea>
+    <div class="field-label">분석 — 이 틀이 RQ에 답하기에 적절한가</div>
+    <textarea class="field-input" id="frameworkAnalyze" rows="2"></textarea>
+    <div class="field-label">적용 — 내가 쓸 분석 틀 스케치</div>
+    <textarea class="field-input" id="frameworkApply" rows="2"></textarea>
+
+    <div class="day-label">Day 7 · 자료 수집</div>
+    <div class="field-label">관찰 — 무엇을, 어디서, 어떻게 수집했는가</div>
+    <textarea class="field-input" id="collectObserve" rows="2"></textarea>
+    <div class="field-label">분석 — 수집 방법의 장단점</div>
+    <textarea class="field-input" id="collectAnalyze" rows="2"></textarea>
+    <div class="field-label">적용 — 내 자료수집 계획 초안</div>
+    <textarea class="field-input" id="collectApply" rows="2"></textarea>
+
+    <div class="day-label">Day 8 · 자료 분석</div>
+    <div class="field-label">관찰 — 수집한 자료를 어떤 절차로 분석했는가</div>
+    <textarea class="field-input" id="analyzeObserve" rows="2"></textarea>
+    <div class="field-label">분석 — 분석 절차가 RQ에 답하기에 충분한가</div>
+    <textarea class="field-input" id="analyzeAnalyze" rows="2"></textarea>
+    <div class="field-label">적용 — 내 분석 계획 초안</div>
+    <textarea class="field-input" id="analyzeApply" rows="2"></textarea>
+
+    <div class="day-label">Day 9 · 결과 제시 · 결론 도출 · 제언</div>
+    <div class="otc-grid">
+      <div>
+        <div class="field-label">결과 제시 방법 (관찰/분석)</div>
+        <textarea class="field-input" id="resultsNote" rows="4"></textarea>
+      </div>
+      <div>
+        <div class="field-label">결론 도출 방법 (관찰/분석)</div>
+        <textarea class="field-input" id="conclusionNote" rows="4"></textarea>
+      </div>
+      <div>
+        <div class="field-label">제언 · 한계 인정 (관찰/분석)</div>
+        <textarea class="field-input" id="limitationNote" rows="4"></textarea>
+      </div>
+    </div>
+    <div class="field-label">적용 — 내 프로포절의 결과 제시 방식 / 결론 초안 / 한계 미리 적어보기</div>
+    <textarea class="field-input" id="finalApply" rows="3"></textarea>
+
+    <div style="margin-top:24px; display:flex; align-items:center; gap:12px;">
+      <button id="saveBtn" style="padding:10px 20px; background:var(--accent); color:#fff; border:none; border-radius:5px; font-weight:700; font-size:14px; cursor:pointer;">저장하기</button>
+      <span id="saveStatus" style="font-size:12.5px;"></span>
+    </div>
+  </div>
+  </div>
+
+  <script src="../assets/app.js"></script>
+  <script>
+    // day 값은 0으로 고정 — 이 폼은 특정 Day에 종속되지 않고 Day5~9 내내 같은 응답을 이어서 씀
+    const DAY = 0;
+    const FORM_ID = "rolemodel-analysis";
+    const FIELD_IDS = [
+      "biblio","whyChosen","tocObserve","tocAnalyze","tocApply",
+      "introObserve","introAnalyze","introApply",
+      "theoryObserve","theoryAnalyze","theoryApply",
+      "frameworkObserve","frameworkAnalyze","frameworkApply",
+      "collectObserve","collectAnalyze","collectApply",
+      "analyzeObserve","analyzeAnalyze","analyzeApply",
+      "resultsNote","conclusionNote","limitationNote","finalApply"
+    ];
+
+    function collectData(){
+      const data = {};
+      FIELD_IDS.forEach(id => data[id] = document.getElementById(id).value);
+      return data;
+    }
+    function populateData(data){
+      if(!data) return;
+      FIELD_IDS.forEach(id => {
+        const el = document.getElementById(id);
+        if(el) el.value = data[id] || "";
+      });
+    }
+
+    const savedAuth = ee_getSavedAuth();
+    if(savedAuth.id) document.getElementById("studentId").value = savedAuth.id;
+    if(savedAuth.pin) document.getElementById("studentPin").value = savedAuth.pin;
+
+    async function doVerifyAndLoad(){
+      const id = document.getElementById("studentId").value.trim();
+      const pin = document.getElementById("studentPin").value.trim();
+      if(!id || !pin){ ee_setStatus(document.getElementById("statusMsg"), "학번과 비밀번호를 입력해주세요.", true); return; }
+      const result = await ee_verify(id, pin, document.getElementById("statusMsg"));
+      if(result.ok){
+        const data = await ee_loadResponse(DAY, FORM_ID, document.getElementById("statusMsg"));
+        if(data) populateData(data);
+      }
+    }
+    document.getElementById("verifyBtn").addEventListener("click", doVerifyAndLoad);
+    if(savedAuth.id && savedAuth.pin) doVerifyAndLoad();
+
+    document.getElementById("saveBtn").addEventListener("click", async ()=>{
+      const { id, pin } = ee_getSavedAuth();
+      if(!id || !pin){ ee_setStatus(document.getElementById("saveStatus"), "먼저 위에서 학번/비밀번호 확인을 눌러주세요.", true); return; }
+      const data = collectData();
+      await ee_saveResponse(DAY, FORM_ID, data, document.getElementById("saveStatus"));
+    });
+  </script>
+</body>
+</html>

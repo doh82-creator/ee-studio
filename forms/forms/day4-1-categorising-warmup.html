@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Warm-up — Categorising</title>
+<link rel="stylesheet" href="../assets/form.css">
+</head>
+<body>
+  <div class="site-topbar">
+    <div class="brand">EE Research Studio</div>
+    <div><a href="../index.html">Home</a> &nbsp;/&nbsp; <a href="../days/day4.html">Day 4</a> &nbsp;/&nbsp; Warm-up</div>
+  </div>
+
+  <div class="wrap">
+  <div class="sheet">
+    <span class="hw-tag">Warm-up · Day 4</span>
+    <h1>Categorising: Topic, Keyword &amp; Paraphrasing</h1>
+    <div class="sub">개별 작성 (10분) → 조별 비교 (10분)</div>
+
+    <div class="lede">
+      아래 글에서 반복되는 키워드를 찾아 상위 범주로 묶고, 핵심 내용을 자신의 말로
+      paraphrase 해보세요.
+    </div>
+
+    <div class="code-box">
+      <label>학번</label>
+      <input type="text" id="studentId" placeholder="예: 20301">
+      <label>비밀번호(4자리)</label>
+      <input type="password" id="studentPin" maxlength="4" placeholder="••••">
+      <button id="verifyBtn">확인</button>
+      <span id="statusMsg" style="font-size:12.5px;"></span>
+    </div>
+
+    <div class="sample-para">
+      Teenagers today check their phones constantly, often reaching for them within minutes of waking up
+      and again right before falling asleep. They text friends, scroll through feeds, and watch short videos
+      between classes, sometimes even during class when teachers are not looking. Parents worry that phones
+      distract students from homework, and many report nightly arguments about screen time limits at home.
+      Teachers report that phones interrupt classroom focus, making it harder to hold students' attention
+      for an entire lesson. Some schools have banned phones entirely during school hours to reduce these
+      distractions, storing them in locked pouches or designated boxes each morning. Other schools have tried
+      softer approaches, such as designated phone breaks between periods, with mixed results so far.
+    </div>
+
+    <div class="section-title" style="font-size:14px; font-weight:700; color:var(--ink); margin:20px 0 10px;">Step 1 · 개별 작성</div>
+    <div class="field-label">반복되는 키워드 3~5개</div>
+    <textarea id="keywords" rows="2" class="field-input"></textarea>
+
+    <div class="field-label">이 키워드들을 하나의 상위 범주로 묶는다면?</div>
+    <textarea id="category" rows="2" class="field-input"></textarea>
+
+    <div class="field-label">핵심 내용 paraphrase (2문장 이내)</div>
+    <textarea id="paraphrase" rows="2" class="field-input"></textarea>
+
+    <div class="section-title" style="font-size:14px; font-weight:700; color:var(--ink); margin:24px 0 10px;">Step 2 · 조별 비교</div>
+    <div class="peer-block">
+      <div class="field-label">조원 이름</div>
+      <input type="text" id="peerName" class="field-input">
+      <div class="field-label">이 친구가 찾은 범주와 나의 범주, 어떻게 다른가?</div>
+      <textarea id="peerCategoryDiff" rows="2" class="field-input"></textarea>
+      <div class="field-label">이 친구의 paraphrasing에서 배울 점</div>
+      <textarea id="peerParaphraseNote" rows="2" class="field-input"></textarea>
+    </div>
+
+    <div style="margin-top:24px; display:flex; align-items:center; gap:12px;">
+      <button id="saveBtn" style="padding:10px 20px; background:var(--accent); color:#fff; border:none; border-radius:5px; font-weight:700; font-size:14px; cursor:pointer;">저장하기</button>
+      <span id="saveStatus" style="font-size:12.5px;"></span>
+    </div>
+  </div>
+  </div>
+
+  <style>
+    .field-label{font-size:12.5px; color:var(--ink-soft); margin:12px 0 4px; font-weight:700;}
+    .field-input{width:100%; padding:8px 10px; border:1px solid var(--line-strong); border-radius:4px; font-size:13.5px; font-family:inherit;}
+    .peer-block{border:1px solid var(--line-strong); border-radius:6px; padding:14px 16px; margin-top:10px; background:#F5FAFD;}
+    .sample-para{font-size:13.5px; line-height:1.7; padding:14px 18px; background:#FCFBF8; border:1px dashed var(--line-strong); border-radius:6px; margin-top:16px;}
+  </style>
+
+  <script src="../assets/app.js"></script>
+  <script>
+    const DAY = 4;
+    const FORM_ID = "day4-1-categorising-warmup";
+    const FIELD_IDS = ["keywords","category","paraphrase","peerName","peerCategoryDiff","peerParaphraseNote"];
+
+    function collectData(){
+      const data = {};
+      FIELD_IDS.forEach(id => data[id] = document.getElementById(id).value);
+      return data;
+    }
+    function populateData(data){
+      if(!data) return;
+      FIELD_IDS.forEach(id => { const el = document.getElementById(id); if(el) el.value = data[id] || ""; });
+    }
+
+    const savedAuth = ee_getSavedAuth();
+    if(savedAuth.id) document.getElementById("studentId").value = savedAuth.id;
+    if(savedAuth.pin) document.getElementById("studentPin").value = savedAuth.pin;
+
+    async function doVerifyAndLoad(){
+      const id = document.getElementById("studentId").value.trim();
+      const pin = document.getElementById("studentPin").value.trim();
+      if(!id || !pin){ ee_setStatus(document.getElementById("statusMsg"), "학번과 비밀번호를 입력해주세요.", true); return; }
+      const result = await ee_verify(id, pin, document.getElementById("statusMsg"));
+      if(result.ok){
+        const data = await ee_loadResponse(DAY, FORM_ID, document.getElementById("statusMsg"));
+        if(data) populateData(data);
+      }
+    }
+    document.getElementById("verifyBtn").addEventListener("click", doVerifyAndLoad);
+    if(savedAuth.id && savedAuth.pin) doVerifyAndLoad();
+
+    document.getElementById("saveBtn").addEventListener("click", async ()=>{
+      const { id, pin } = ee_getSavedAuth();
+      if(!id || !pin){ ee_setStatus(document.getElementById("saveStatus"), "먼저 위에서 학번/비밀번호 확인을 눌러주세요.", true); return; }
+      const data = collectData();
+      await ee_saveResponse(DAY, FORM_ID, data, document.getElementById("saveStatus"));
+    });
+  </script>
+</body>
+</html>
