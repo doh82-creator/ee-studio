@@ -30,8 +30,8 @@ body{background:var(--paper); margin:0; padding:40px 20px; font-family:-apple-sy
 .stamp .num{font-size:46px; font-weight:900; line-height:1;}
 .stamp .lbl{font-size:17px; font-weight:700; color:var(--ink-soft);}
 
-/* masthead / title block */
-.masthead{border-bottom:3px double var(--ink); padding-bottom:14px; margin-bottom:26px; padding-right:100px;}
+/* masthead / title block — divider line removed per teacher request */
+.masthead{padding-bottom:14px; margin-bottom:26px; padding-right:100px;}
 .program{font-size:12px; letter-spacing:2.5px; text-transform:uppercase; color:var(--accent); font-weight:700; margin-bottom:7px;}
 h1{font-family:'Noto Sans KR',sans-serif; font-weight:900; font-size:32px; margin:0 0 7px; color:var(--ink); line-height:1.25; letter-spacing:-.3px;}
 .sub{font-size:14.5px; color:var(--ink-soft); letter-spacing:.2px;}
