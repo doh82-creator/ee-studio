@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Warm-up — Body &amp; Bridge</title>
+<link rel="stylesheet" href="../assets/form.css">
+<style>
+  .field-label{font-size:12.5px; color:var(--ink-soft); margin:12px 0 4px; font-weight:700;}
+  .field-input{width:100%; padding:8px 10px; border:1px solid var(--line-strong); border-radius:4px; font-size:13.5px; font-family:inherit;}
+  .peer-block{border:1px solid var(--line-strong); border-radius:6px; padding:14px 16px; margin-top:10px; background:#F5FAFD;}
+</style>
+</head>
+<body>
+  <div class="site-topbar">
+    <div class="brand">EE Research Studio</div>
+    <div><a href="../index.html">Home</a> &nbsp;/&nbsp; <a href="../days/day6.html">Day 6</a> &nbsp;/&nbsp; Warm-up</div>
+  </div>
+
+  <div class="wrap">
+  <div class="sheet">
+    <span class="hw-tag">Warm-up · Day 6</span>
+    <h1>Body &amp; Bridge</h1>
+    <div class="sub">개별 작성 (10분) → 조별 비교 (10분)</div>
+
+    <div class="lede">
+      본론 문단(Body Paragraph)에는 Topic Sentence가 필요하지만, Thesis Statement에
+      <strong>Predictor</strong>가 있으면 별도 Topic Sentence 없이 <strong>Bridge</strong>(연결 문장)만으로도
+      문단을 시작할 수 있습니다. Bridge는 문단의 처음이나 끝에서 앞뒤 문단을 이어주는 역할을 합니다.
+    </div>
+
+    <div class="code-box">
+      <label>학번</label>
+      <input type="text" id="studentId" placeholder="예: 20301">
+      <label>비밀번호(4자리)</label>
+      <input type="password" id="studentPin" maxlength="4" placeholder="••••">
+      <button id="verifyBtn">확인</button>
+      <span id="statusMsg" style="font-size:12.5px;"></span>
+    </div>
+
+    <div class="section-title" style="font-size:14px; font-weight:700; color:var(--ink); margin:0 0 10px;">개념 설명</div>
+    <table style="width:100%; border-collapse:collapse; font-size:13px; margin-bottom:16px;">
+      <tr><th style="background:var(--ink); color:#fff; text-align:left; padding:8px;">개념</th><th style="background:var(--ink); color:#fff; text-align:left; padding:8px;">설명</th></tr>
+      <tr><td style="padding:7px 8px; border-bottom:1px solid var(--line);"><strong>Predictor</strong></td><td style="padding:7px 8px; border-bottom:1px solid var(--line);">Thesis Statement 안에서 본론이 몇 개, 어떤 순서로 전개될지 미리 알려주는 장치 (예: reduce, reuse, recycle)</td></tr>
+      <tr><td style="padding:7px 8px;"><strong>Bridge</strong></td><td style="padding:7px 8px;">Topic Sentence 없이도 앞 문단과 자연스럽게 이어지도록 만드는 연결 문장 — 문단의 처음이나 끝에 올 수 있음</td></tr>
+    </table>
+
+    <p style="font-size:13px; color:var(--ink-soft); margin:0 0 12px;">
+      다음 Thesis Statement를 읽고, 이것이 예고하는 본론 문단이 몇 개이고 각각 무엇을 다룰지 적어보세요.
+    </p>
+    <div class="lede" style="margin:0 0 14px;">
+      There are three actions anyone can take to help decrease our garbage problem: reduce the amount
+      you throw away, reuse items that are still good, and recycle things that can be recycled.
+    </div>
+
+    <div class="section-title" style="font-size:14px; font-weight:700; color:var(--ink); margin:0 0 10px;">Step 1 · 개별 작성</div>
+    <div class="field-label">이 Thesis Statement가 예고하는 본론 문단 수와 순서</div>
+    <textarea id="predictorAnalysis" rows="2" class="field-input"></textarea>
+
+    <div class="field-label">두 번째 본론 문단의 첫 문장을 Bridge로 직접 써보세요 (Topic Sentence 없이, 앞 문단과 자연스럽게 연결)</div>
+    <textarea id="myBridge" rows="2" class="field-input"></textarea>
+
+    <div class="section-title" style="font-size:14px; font-weight:700; color:var(--ink); margin:20px 0 10px;">Step 2 · 조별 비교</div>
+    <div class="peer-block">
+      <div class="field-label">조원 이름</div>
+      <input type="text" id="peerName" class="field-input">
+      <div class="field-label">이 친구의 Bridge 문장이 자연스러운가? 왜 그런가?</div>
+      <textarea id="peerNote" rows="2" class="field-input"></textarea>
+    </div>
+
+    <div style="margin-top:24px; display:flex; align-items:center; gap:12px;">
+      <button id="saveBtn" style="padding:10px 20px; background:var(--accent); color:#fff; border:none; border-radius:5px; font-weight:700; font-size:14px; cursor:pointer;">저장하기</button>
+      <span id="saveStatus" style="font-size:12.5px;"></span>
+    </div>
+  </div>
+  </div>
+
+  <script src="../assets/app.js"></script>
+  <script>
+    const DAY = 6;
+    const FORM_ID = "day6-1-body-bridge-warmup";
+    const FIELD_IDS = ["predictorAnalysis","myBridge","peerName","peerNote"];
+
+    function collectData(){
+      const data = {};
+      FIELD_IDS.forEach(id => data[id] = document.getElementById(id).value);
+      return data;
+    }
+    function populateData(data){
+      if(!data) return;
+      FIELD_IDS.forEach(id => { const el = document.getElementById(id); if(el) el.value = data[id] || ""; });
+    }
+
+    const savedAuth = ee_getSavedAuth();
+    if(savedAuth.id) document.getElementById("studentId").value = savedAuth.id;
+    if(savedAuth.pin) document.getElementById("studentPin").value = savedAuth.pin;
+
+    async function doVerifyAndLoad(){
+      const id = document.getElementById("studentId").value.trim();
+      const pin = document.getElementById("studentPin").value.trim();
+      if(!id || !pin){ ee_setStatus(document.getElementById("statusMsg"), "학번과 비밀번호를 입력해주세요.", true); return; }
+      const result = await ee_verify(id, pin, document.getElementById("statusMsg"));
+      if(result.ok){
+        const data = await ee_loadResponse(DAY, FORM_ID, document.getElementById("statusMsg"));
+        if(data) populateData(data);
+      }
+    }
+    document.getElementById("verifyBtn").addEventListener("click", doVerifyAndLoad);
+    if(savedAuth.id && savedAuth.pin) doVerifyAndLoad();
+
+    document.getElementById("saveBtn").addEventListener("click", async ()=>{
+      const { id, pin } = ee_getSavedAuth();
+      if(!id || !pin){ ee_setStatus(document.getElementById("saveStatus"), "먼저 위에서 학번/비밀번호 확인을 눌러주세요.", true); return; }
+      const data = collectData();
+      await ee_saveResponse(DAY, FORM_ID, data, document.getElementById("saveStatus"));
+    });
+  </script>
+</body>
+</html>

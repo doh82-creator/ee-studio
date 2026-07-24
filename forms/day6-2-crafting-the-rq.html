@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Crafting the Research Question</title>
+<link rel="stylesheet" href="../assets/form.css">
+<style>
+  .field-label{font-size:12.5px; color:var(--ink-soft); margin:12px 0 4px; font-weight:700;}
+  .field-input{width:100%; padding:8px 10px; border:1px solid var(--line-strong); border-radius:4px; font-size:13.5px; font-family:inherit;}
+</style>
+</head>
+<body>
+  <div class="site-topbar">
+    <div class="brand">EE Research Studio</div>
+    <div><a href="../index.html">Home</a> &nbsp;/&nbsp; <a href="../days/day6.html">Day 6</a> &nbsp;/&nbsp; Crafting the Research Question</div>
+  </div>
+
+  <div class="wrap">
+  <div class="sheet">
+    <span class="hw-tag">메인 활동 · 이어서 Day 7 전까지 완성 (Homework)</span>
+    <h1>Crafting the Research Question</h1>
+    <div class="sub">Day 6 · Crafting the Research Question</div>
+
+    <div class="lede">
+      오늘은 Research Paper Introduction의 남은 두 요소 — <strong>이론이나 개념 설명</strong>과
+      <strong>선행연구 분석</strong> — 을 채우고, 이를 바탕으로 하나의 명확한
+      <strong>연구질문(research question)</strong>을 완성합니다.
+    </div>
+
+    <div class="code-box">
+      <label>학번</label>
+      <input type="text" id="studentId" placeholder="예: 20301">
+      <label>비밀번호(4자리)</label>
+      <input type="password" id="studentPin" maxlength="4" placeholder="••••">
+      <button id="verifyBtn">확인</button>
+      <span id="statusMsg" style="font-size:12.5px;"></span>
+    </div>
+
+    <div class="section-title" style="font-size:14px; font-weight:700; color:var(--ink); margin:0 0 10px;">Research Paper Introduction 구조에서 오늘의 위치</div>
+    <table style="width:100%; border-collapse:collapse; font-size:13px; margin-bottom:16px;">
+      <tr><th style="background:var(--ink); color:#fff; text-align:left; padding:8px; width:36px;">순서</th><th style="background:var(--ink); color:#fff; text-align:left; padding:8px;">요소</th><th style="background:var(--ink); color:#fff; text-align:left; padding:8px;">진행 시점</th></tr>
+      <tr><td style="padding:7px 8px; border-bottom:1px solid var(--line);">①</td><td style="padding:7px 8px; border-bottom:1px solid var(--line);">주제설정의 배경</td><td style="padding:7px 8px; border-bottom:1px solid var(--line);">Day 2</td></tr>
+      <tr><td style="padding:7px 8px; border-bottom:1px solid var(--line);">②</td><td style="padding:7px 8px; border-bottom:1px solid var(--line);">연구자의 문제인식 (research problem)</td><td style="padding:7px 8px; border-bottom:1px solid var(--line);">Day 3</td></tr>
+      <tr><td style="padding:7px 8px; border-bottom:1px solid var(--line); background:#EAF5FB;">-</td><td style="padding:7px 8px; border-bottom:1px solid var(--line); background:#EAF5FB;">이론이나 개념 설명</td><td style="padding:7px 8px; border-bottom:1px solid var(--line); background:#EAF5FB;"><strong>Day 6 (오늘)</strong></td></tr>
+      <tr><td style="padding:7px 8px; border-bottom:1px solid var(--line); background:#EAF5FB;">-</td><td style="padding:7px 8px; border-bottom:1px solid var(--line); background:#EAF5FB;">선행연구 분석 결과</td><td style="padding:7px 8px; border-bottom:1px solid var(--line); background:#EAF5FB;"><strong>Day 6 (오늘)</strong></td></tr>
+      <tr><td style="padding:7px 8px; border-bottom:1px solid var(--line);">③</td><td style="padding:7px 8px; border-bottom:1px solid var(--line);">연구목적</td><td style="padding:7px 8px; border-bottom:1px solid var(--line);">Day 5</td></tr>
+      <tr><td style="padding:7px 8px;">④</td><td style="padding:7px 8px;">연구질문 (research question)</td><td style="padding:7px 8px;"><strong>Day 6 (오늘)</strong></td></tr>
+    </table>
+
+    <div class="section-title" style="font-size:14px; font-weight:700; color:var(--ink); margin:0 0 10px;">이론이나 개념 설명</div>
+    <p style="font-size:13px; color:var(--ink-soft); margin:0 0 10px;">
+      내 연구가 어느 부분에 주목하고 있는지 — 관련된 이론이나 핵심 개념을 설명하세요. Day 5~6
+      웜업에서 분석한 롤모델 페이퍼의 이론적 배경을 참고하세요.
+    </p>
+    <textarea id="theoryConcept" rows="4" class="field-input" placeholder="내 연구와 관련된 이론·개념을 설명하고, 내 연구가 그중 어느 부분에 주목하는지 서술"></textarea>
+
+    <div class="section-title" style="font-size:14px; font-weight:700; color:var(--ink); margin:20px 0 10px;">선행연구 분석 결과</div>
+    <p style="font-size:13px; color:var(--ink-soft); margin:0 0 10px;">
+      내 연구주제가 얼마나 중요한지, 그리고 내 연구가 선행연구와 어떤 차별성이 있는지 서술하세요.
+    </p>
+    <textarea id="priorResearch" rows="4" class="field-input" placeholder="선행연구(Day 4에서 찾은 자료 포함)를 근거로 주제의 중요성과 나의 연구가 갖는 차별성을 서술"></textarea>
+
+    <div class="section-title" style="font-size:14px; font-weight:700; color:var(--ink); margin:20px 0 10px;">연구질문 (Research Question)</div>
+    <p style="font-size:13px; color:var(--ink-soft); margin:0 0 10px;">
+      하나의 focused, analytical, answerable 질문으로 좁히세요. 평가기준 A(Framework for the
+      Essay)와 직결됩니다.
+    </p>
+    <table style="width:100%; border-collapse:collapse; font-size:13px; margin-bottom:16px;">
+      <tr><th style="background:var(--ink); color:#fff; text-align:left; padding:8px;">체크리스트</th></tr>
+      <tr><td style="padding:7px 8px; border-bottom:1px solid var(--line);">하나의 질문에만 집중하는가? (여러 질문을 합치지 않았는가)</td></tr>
+      <tr><td style="padding:7px 8px; border-bottom:1px solid var(--line);">단순 사실 확인이 아니라 분석·논증이 필요한가?</td></tr>
+      <tr><td style="padding:7px 8px;">4,000단어 안에서 답할 수 있을 만큼 구체적인가?</td></tr>
+    </table>
+    <textarea id="researchQuestion" rows="3" class="field-input" placeholder="나의 연구질문"></textarea>
+
+    <div style="margin-top:24px; display:flex; align-items:center; gap:12px;">
+      <button id="saveBtn" style="padding:10px 20px; background:var(--accent); color:#fff; border:none; border-radius:5px; font-weight:700; font-size:14px; cursor:pointer;">저장하기</button>
+      <span id="saveStatus" style="font-size:12.5px;"></span>
+    </div>
+
+    <div class="lede" style="margin-top:26px;">
+      오늘 완성한 내용이 그대로 Day 7까지의 과제가 됩니다. Day 7부터는 이 연구질문에 답하기 위한
+      연구방법(자료수집·자료분석)을 설계합니다.
+    </div>
+  </div>
+  </div>
+
+  <script src="../assets/app.js"></script>
+  <script>
+    const DAY = 6;
+    const FORM_ID = "day6-2-crafting-the-rq";
+    const FIELD_IDS = ["theoryConcept","priorResearch","researchQuestion"];
+
+    function collectData(){
+      const data = {};
+      FIELD_IDS.forEach(id => data[id] = document.getElementById(id).value);
+      return data;
+    }
+    function populateData(data){
+      if(!data) return;
+      FIELD_IDS.forEach(id => { const el = document.getElementById(id); if(el) el.value = data[id] || ""; });
+    }
+
+    const savedAuth = ee_getSavedAuth();
+    if(savedAuth.id) document.getElementById("studentId").value = savedAuth.id;
+    if(savedAuth.pin) document.getElementById("studentPin").value = savedAuth.pin;
+
+    async function doVerifyAndLoad(){
+      const id = document.getElementById("studentId").value.trim();
+      const pin = document.getElementById("studentPin").value.trim();
+      if(!id || !pin){ ee_setStatus(document.getElementById("statusMsg"), "학번과 비밀번호를 입력해주세요.", true); return; }
+      const result = await ee_verify(id, pin, document.getElementById("statusMsg"));
+      if(result.ok){
+        const data = await ee_loadResponse(DAY, FORM_ID, document.getElementById("statusMsg"));
+        if(data) populateData(data);
+      }
+    }
+    document.getElementById("verifyBtn").addEventListener("click", doVerifyAndLoad);
+    if(savedAuth.id && savedAuth.pin) doVerifyAndLoad();
+
+    document.getElementById("saveBtn").addEventListener("click", async ()=>{
+      const { id, pin } = ee_getSavedAuth();
+      if(!id || !pin){ ee_setStatus(document.getElementById("saveStatus"), "먼저 위에서 학번/비밀번호 확인을 눌러주세요.", true); return; }
+      const data = collectData();
+      await ee_saveResponse(DAY, FORM_ID, data, document.getElementById("saveStatus"));
+    });
+  </script>
+</body>
+</html>
