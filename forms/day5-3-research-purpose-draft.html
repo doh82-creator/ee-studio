@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>My Research Purpose — Homework</title>
+<link rel="stylesheet" href="../assets/form.css">
+</head>
+<body>
+  <div class="site-topbar">
+    <div class="brand">EE Research Studio</div>
+    <div><a href="../index.html">Home</a> &nbsp;/&nbsp; <a href="../days/day5.html">Day 5</a> &nbsp;/&nbsp; My Research Purpose</div>
+  </div>
+
+  <div class="wrap">
+  <div class="sheet">
+    <span class="hw-tag">Homework — Due Day 6</span>
+    <h1>My Research Purpose</h1>
+    <div class="sub">Day 5 · Research Purpose</div>
+
+    <div class="lede">
+      오늘 쓴 연구목적 문단을 정리해서 제출하세요. Day 6에서 이를 하나의 연구질문(RQ)으로
+      좁힙니다.
+    </div>
+
+    <div class="code-box">
+      <label>학번</label>
+      <input type="text" id="studentId" placeholder="예: 20301">
+      <label>비밀번호(4자리)</label>
+      <input type="password" id="studentPin" maxlength="4" placeholder="••••">
+      <button id="verifyBtn">확인</button>
+      <span id="statusMsg" style="font-size:12.5px;"></span>
+    </div>
+
+    <div class="section-title" style="font-size:14px; font-weight:700; color:var(--ink); margin:0 0 10px;">My Research Purpose</div>
+    <textarea id="researchPurpose" rows="5" style="width:100%; padding:10px; border:1px solid var(--line-strong); border-radius:5px; font-size:14px; font-family:inherit;" placeholder="이 연구는 ~을 밝히고자 한다..."></textarea>
+
+    <div class="section-title" style="font-size:14px; font-weight:700; color:var(--ink); margin:20px 0 10px;">롤모델 페이퍼 서론에서 참고한 점</div>
+    <textarea id="rolemodelNote" rows="3" style="width:100%; padding:10px; border:1px solid var(--line-strong); border-radius:5px; font-size:14px; font-family:inherit;"></textarea>
+
+    <div style="margin-top:24px; display:flex; align-items:center; gap:12px;">
+      <button id="saveBtn" style="padding:10px 20px; background:var(--accent); color:#fff; border:none; border-radius:5px; font-weight:700; font-size:14px; cursor:pointer;">저장하기</button>
+      <span id="saveStatus" style="font-size:12.5px;"></span>
+    </div>
+  </div>
+  </div>
+
+  <script src="../assets/app.js"></script>
+  <script>
+    const DAY = 5;
+    const FORM_ID = "day5-3-research-purpose-draft";
+
+    function collectData(){
+      return {
+        researchPurpose: document.getElementById("researchPurpose").value,
+        rolemodelNote: document.getElementById("rolemodelNote").value
+      };
+    }
+    function populateData(data){
+      if(!data) return;
+      document.getElementById("researchPurpose").value = data.researchPurpose || "";
+      document.getElementById("rolemodelNote").value = data.rolemodelNote || "";
+    }
+
+    const savedAuth = ee_getSavedAuth();
+    if(savedAuth.id) document.getElementById("studentId").value = savedAuth.id;
+    if(savedAuth.pin) document.getElementById("studentPin").value = savedAuth.pin;
+
+    async function doVerifyAndLoad(){
+      const id = document.getElementById("studentId").value.trim();
+      const pin = document.getElementById("studentPin").value.trim();
+      if(!id || !pin){ ee_setStatus(document.getElementById("statusMsg"), "학번과 비밀번호를 입력해주세요.", true); return; }
+      const result = await ee_verify(id, pin, document.getElementById("statusMsg"));
+      if(result.ok){
+        const data = await ee_loadResponse(DAY, FORM_ID, document.getElementById("statusMsg"));
+        if(data) populateData(data);
+      }
+    }
+    document.getElementById("verifyBtn").addEventListener("click", doVerifyAndLoad);
+    if(savedAuth.id && savedAuth.pin) doVerifyAndLoad();
+
+    document.getElementById("saveBtn").addEventListener("click", async ()=>{
+      const { id, pin } = ee_getSavedAuth();
+      if(!id || !pin){ ee_setStatus(document.getElementById("saveStatus"), "먼저 위에서 학번/비밀번호 확인을 눌러주세요.", true); return; }
+      const data = collectData();
+      await ee_saveResponse(DAY, FORM_ID, data, document.getElementById("saveStatus"));
+    });
+  </script>
+</body>
+</html>

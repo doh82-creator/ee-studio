@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>My Topic Draft — Homework</title>
+<link rel="stylesheet" href="../assets/form.css">
+</head>
+<body>
+  <div class="site-topbar">
+    <div class="brand">EE Research Studio</div>
+    <div><a href="../index.html">Home</a> &nbsp;/&nbsp; <a href="../days/day2.html">Day 2</a> &nbsp;/&nbsp; My Topic Draft</div>
+  </div>
+
+  <div class="wrap">
+  <div class="sheet">
+    <span class="hw-tag">Homework — Due Day 3</span>
+    <h1>My Topic Draft</h1>
+    <div class="sub">Day 2 · From Subject to Topic</div>
+
+    <div class="lede">
+      오늘 좁힌 subject → narrowed field → topic을 정리해서 제출하세요. 확정이 아니라
+      초안입니다. Day 3에서 이 topic을 바탕으로 문제 인식을 찾습니다.
+    </div>
+
+    <div class="code-box">
+      <label>학번</label>
+      <input type="text" id="studentId" placeholder="예: 20301">
+      <label>비밀번호(4자리)</label>
+      <input type="password" id="studentPin" maxlength="4" placeholder="••••">
+      <button id="verifyBtn">확인</button>
+      <span id="statusMsg" style="font-size:12.5px;"></span>
+    </div>
+
+    <div class="section-title" style="font-size:14px; font-weight:700; color:var(--ink); margin:0 0 10px;">Step 1 · Subject</div>
+    <input type="text" id="subject" style="width:100%; padding:10px; border:1px solid var(--line-strong); border-radius:5px; font-size:14px;" placeholder="넓은 관심 분야">
+
+    <div class="section-title" style="font-size:14px; font-weight:700; color:var(--ink); margin:20px 0 10px;">Step 2 · Narrowed Field</div>
+    <input type="text" id="narrowedField" style="width:100%; padding:10px; border:1px solid var(--line-strong); border-radius:5px; font-size:14px;" placeholder="좁혀진 하위 영역">
+
+    <div class="section-title" style="font-size:14px; font-weight:700; color:var(--ink); margin:20px 0 10px;">Step 3 · My Topic</div>
+    <textarea id="myTopic" rows="3" style="width:100%; padding:10px; border:1px solid var(--line-strong); border-radius:5px; font-size:14px; font-family:inherit;" placeholder="구체적인 topic 문장"></textarea>
+
+    <div class="section-title" style="font-size:14px; font-weight:700; color:var(--ink); margin:20px 0 10px;">이 Topic을 고른 이유 (한두 문장)</div>
+    <textarea id="reason" rows="3" style="width:100%; padding:10px; border:1px solid var(--line-strong); border-radius:5px; font-size:14px; font-family:inherit;"></textarea>
+
+    <div style="margin-top:24px; display:flex; align-items:center; gap:12px;">
+      <button id="saveBtn" style="padding:10px 20px; background:var(--accent); color:#fff; border:none; border-radius:5px; font-weight:700; font-size:14px; cursor:pointer;">저장하기</button>
+      <span id="saveStatus" style="font-size:12.5px;"></span>
+    </div>
+  </div>
+  </div>
+
+  <script src="../assets/app.js"></script>
+  <script>
+    const DAY = 2;
+    const FORM_ID = "day2-3-topic-draft";
+
+    function collectData(){
+      return {
+        subject: document.getElementById("subject").value,
+        narrowedField: document.getElementById("narrowedField").value,
+        myTopic: document.getElementById("myTopic").value,
+        reason: document.getElementById("reason").value
+      };
+    }
+    function populateData(data){
+      if(!data) return;
+      document.getElementById("subject").value = data.subject || "";
+      document.getElementById("narrowedField").value = data.narrowedField || "";
+      document.getElementById("myTopic").value = data.myTopic || "";
+      document.getElementById("reason").value = data.reason || "";
+    }
+
+    const savedAuth = ee_getSavedAuth();
+    if(savedAuth.id) document.getElementById("studentId").value = savedAuth.id;
+    if(savedAuth.pin) document.getElementById("studentPin").value = savedAuth.pin;
+
+    async function doVerifyAndLoad(){
+      const id = document.getElementById("studentId").value.trim();
+      const pin = document.getElementById("studentPin").value.trim();
+      if(!id || !pin){ ee_setStatus(document.getElementById("statusMsg"), "학번과 비밀번호를 입력해주세요.", true); return; }
+      const result = await ee_verify(id, pin, document.getElementById("statusMsg"));
+      if(result.ok){
+        const data = await ee_loadResponse(DAY, FORM_ID, document.getElementById("statusMsg"));
+        if(data) populateData(data);
+      }
+    }
+    document.getElementById("verifyBtn").addEventListener("click", doVerifyAndLoad);
+    if(savedAuth.id && savedAuth.pin) doVerifyAndLoad();
+
+    document.getElementById("saveBtn").addEventListener("click", async ()=>{
+      const { id, pin } = ee_getSavedAuth();
+      if(!id || !pin){ ee_setStatus(document.getElementById("saveStatus"), "먼저 위에서 학번/비밀번호 확인을 눌러주세요.", true); return; }
+      const data = collectData();
+      await ee_saveResponse(DAY, FORM_ID, data, document.getElementById("saveStatus"));
+    });
+  </script>
+</body>
+</html>
