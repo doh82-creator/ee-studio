@@ -14,37 +14,44 @@
 
   <div class="wrap">
   <div class="sheet">
-    <span class="hw-tag">Warm-up · Day 3</span>
-    <h1>Unity, Coherence &amp; Cohesion</h1>
-    <div class="sub">개별 고쳐쓰기 (10분) → 조별 비교 (10분)</div>
-
-    <div class="lede">
-      아래 단락은 Unity·Coherence·Cohesion이 모두 약합니다. 문제점을 찾아 고쳐 써보세요.
+    <div class="code-box" style="margin-bottom:16px;">
+      <label>학번</label>
+      <input type="text" id="studentId" placeholder="예: 20301" style="width:80px;">
+      <label>비밀번호(4자리)</label>
+      <input type="password" id="studentPin" maxlength="4" placeholder="••••" style="width:60px;">
+      <button id="verifyBtn">확인</button>
+      <span id="statusMsg" style="font-size:11.5px;"></span>
     </div>
 
-    <div class="code-box">
-      <label>학번</label>
-      <input type="text" id="studentId" placeholder="예: 20301">
-      <label>비밀번호(4자리)</label>
-      <input type="password" id="studentPin" maxlength="4" placeholder="••••">
-      <button id="verifyBtn">확인</button>
-      <span id="statusMsg" style="font-size:12.5px;"></span>
+    <span class="hw-tag">Warm-up · Day 3</span>
+    <h1>Unity, Coherence &amp; Cohesion</h1>
+    <div class="sub">개별 작성 (10분) → 조별 비교 (10분)</div>
+
+    <div class="lede">
+      아래 단락은 Unity·Coherence·Cohesion이 모두 약합니다. 문제점을 찾아 분석해보세요.
     </div>
 
     <div class="sample-para">
       Boston is one of the most popular U.S. cities with college students. There are two main reasons
       for this. First, students enjoy being in a city that is full of other college students. The Boston area
       has over 50 colleges and universities, including Boston University, Massachusetts Institute of
-      Technology, and Harvard University. <strong>The Charles River, between Boston and Cambridge, is
-      famous for boating and races.</strong> Because of the large number of college students, there are many
+      Technology, and Harvard University. The Charles River, between Boston and Cambridge, is
+      famous for boating and races. Because of the large number of college students, there are many
       events and activities in the city every day. Second, Boston has the feel of a big city, but it's really
       rather small. It is quite convenient for students to get around using public transportation. It is
       very easy for students to become familiar with the city and feel comfortable. There are many
-      friendly neighborhoods near the colleges, and students usually feel welcomed. <strong>However, some
-      Boston residents complain about noisy or irresponsible college students.</strong> It's no surprise that
+      friendly neighborhoods near the colleges, and students usually feel welcomed. However, some
+      Boston residents complain about noisy or irresponsible college students. It's no surprise that
       people regard Boston as one of the top U.S. college towns.
     </div>
-    <p style="font-size:12px; color:var(--ink-soft); margin-top:6px;">(굵게 표시된 두 문장 중 실제로 무관한 문장이 있습니다 — 어떤 것인지, 왜 그런지 아래에 적어보세요.)</p>
+
+    <div class="section-title" style="font-size:14px; font-weight:700; color:var(--ink); margin:20px 0 10px;">한눈에 보기</div>
+    <table style="width:100%; border-collapse:collapse; font-size:13px; margin-bottom:16px;">
+      <tr><th style="background:var(--ink); color:#fff; text-align:left; padding:8px;">개념</th><th style="background:var(--ink); color:#fff; text-align:left; padding:8px;">한 줄 요약</th></tr>
+      <tr><td style="padding:7px 8px; border-bottom:1px solid var(--line);"><strong>Unity</strong></td><td style="padding:7px 8px; border-bottom:1px solid var(--line);">모든 문장이 하나의 Controlling Idea만 뒷받침</td></tr>
+      <tr><td style="padding:7px 8px; border-bottom:1px solid var(--line);"><strong>Coherence</strong></td><td style="padding:7px 8px; border-bottom:1px solid var(--line);">문장이 논리적 순서(시간·공간·설명)로 배열</td></tr>
+      <tr><td style="padding:7px 8px;"><strong>Cohesion</strong></td><td style="padding:7px 8px;">연결어·대명사·정관사 등으로 문장이 매끄럽게 연결</td></tr>
+    </table>
 
     <div class="section-title" style="font-size:14px; font-weight:700; color:var(--ink); margin:20px 0 10px;">개념 설명</div>
     <p style="font-size:13.5px; line-height:1.7; margin:0 0 10px;">

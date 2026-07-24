@@ -14,6 +14,15 @@
 
   <div class="wrap">
   <div class="sheet">
+    <div class="code-box" style="margin-bottom:16px;">
+      <label>학번</label>
+      <input type="text" id="studentId" placeholder="예: 20301" style="width:80px;">
+      <label>비밀번호(4자리)</label>
+      <input type="password" id="studentPin" maxlength="4" placeholder="••••" style="width:60px;">
+      <button id="verifyBtn">확인</button>
+      <span id="statusMsg" style="font-size:11.5px;"></span>
+    </div>
+
     <span class="hw-tag">Warm-up · Day 5</span>
     <h1>Introduction, Thesis &amp; Conclusion</h1>
     <div class="sub">개별 작성 (10분) → 조별 비교 (10분)</div>
@@ -22,6 +31,14 @@
       주제: "고등학생의 스마트폰 사용 시간 제한이 필요한가" — 이 주제로 Introduction,
       Thesis Statement, Conclusion을 각각 2~3문장씩 써보세요.
     </div>
+
+    <div class="section-title" style="font-size:14px; font-weight:700; color:var(--ink); margin:0 0 10px;">한눈에 보기</div>
+    <table style="width:100%; border-collapse:collapse; font-size:13px; margin-bottom:16px;">
+      <tr><th style="background:var(--ink); color:#fff; text-align:left; padding:8px;">개념</th><th style="background:var(--ink); color:#fff; text-align:left; padding:8px;">한 줄 요약</th></tr>
+      <tr><td style="padding:7px 8px; border-bottom:1px solid var(--line);"><strong>Introduction</strong></td><td style="padding:7px 8px; border-bottom:1px solid var(--line);">독자를 topic으로 안내하는 부분</td></tr>
+      <tr><td style="padding:7px 8px; border-bottom:1px solid var(--line);"><strong>Thesis Statement</strong></td><td style="padding:7px 8px; border-bottom:1px solid var(--line);">에세이 전체의 Topic + Controlling Idea</td></tr>
+      <tr><td style="padding:7px 8px;"><strong>Conclusion</strong></td><td style="padding:7px 8px;">본문을 요약하고 마무리하는 부분</td></tr>
+    </table>
 
     <div class="section-title" style="font-size:14px; font-weight:700; color:var(--ink); margin:0 0 10px;">개념 설명</div>
     <p style="font-size:13.5px; line-height:1.7; margin:0 0 10px;">
@@ -60,16 +77,7 @@
     <div class="field-label">빈칸에 들어갈 재진술형 결론 문장</div>
     <input type="text" id="concludingPractice" class="field-input">
 
-    <div class="code-box">
-      <label>학번</label>
-      <input type="text" id="studentId" placeholder="예: 20301">
-      <label>비밀번호(4자리)</label>
-      <input type="password" id="studentPin" maxlength="4" placeholder="••••">
-      <button id="verifyBtn">확인</button>
-      <span id="statusMsg" style="font-size:12.5px;"></span>
-    </div>
-
-    <div class="section-title" style="font-size:14px; font-weight:700; color:var(--ink); margin:0 0 10px;">Step 1 · 개별 작성</div>
+    <div class="section-title" style="font-size:14px; font-weight:700; color:var(--ink); margin:20px 0 10px;">Step 1 · 개별 작성</div>
     <div class="field-label">Introduction</div>
     <textarea id="introduction" rows="3" class="field-input"></textarea>
 

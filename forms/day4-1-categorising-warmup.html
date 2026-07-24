@@ -14,6 +14,15 @@
 
   <div class="wrap">
   <div class="sheet">
+    <div class="code-box" style="margin-bottom:16px;">
+      <label>학번</label>
+      <input type="text" id="studentId" placeholder="예: 20301" style="width:80px;">
+      <label>비밀번호(4자리)</label>
+      <input type="password" id="studentPin" maxlength="4" placeholder="••••" style="width:60px;">
+      <button id="verifyBtn">확인</button>
+      <span id="statusMsg" style="font-size:11.5px;"></span>
+    </div>
+
     <span class="hw-tag">Warm-up · Day 4</span>
     <h1>Categorising: Topic, Keyword &amp; Paraphrasing</h1>
     <div class="sub">개별 작성 (10분) → 조별 비교 (10분)</div>
@@ -21,15 +30,6 @@
     <div class="lede">
       아래 글에서 반복되는 키워드를 찾아 상위 범주로 묶고, 핵심 내용을 자신의 말로
       paraphrase 해보세요.
-    </div>
-
-    <div class="code-box">
-      <label>학번</label>
-      <input type="text" id="studentId" placeholder="예: 20301">
-      <label>비밀번호(4자리)</label>
-      <input type="password" id="studentPin" maxlength="4" placeholder="••••">
-      <button id="verifyBtn">확인</button>
-      <span id="statusMsg" style="font-size:12.5px;"></span>
     </div>
 
     <div class="sample-para">
@@ -45,6 +45,13 @@
       the need for new skills create challenges for workers. While technology offers numerous benefits,
       it also presents ethical and social issues that require careful consideration.
     </div>
+
+    <div class="section-title" style="font-size:14px; font-weight:700; color:var(--ink); margin:20px 0 10px;">한눈에 보기</div>
+    <table style="width:100%; border-collapse:collapse; font-size:13px; margin-bottom:16px;">
+      <tr><th style="background:var(--ink); color:#fff; text-align:left; padding:8px;">개념</th><th style="background:var(--ink); color:#fff; text-align:left; padding:8px;">한 줄 요약</th></tr>
+      <tr><td style="padding:7px 8px; border-bottom:1px solid var(--line);"><strong>Keyword</strong></td><td style="padding:7px 8px; border-bottom:1px solid var(--line);">글에서 반복되는 핵심 단어</td></tr>
+      <tr><td style="padding:7px 8px;"><strong>Categorising</strong></td><td style="padding:7px 8px;">키워드들을 상위 개념으로 묶는 것</td></tr>
+    </table>
 
     <div class="section-title" style="font-size:14px; font-weight:700; color:var(--ink); margin:20px 0 10px;">개념 설명</div>
     <p style="font-size:13.5px; line-height:1.7; margin:0 0 10px;">
