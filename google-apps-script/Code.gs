@@ -1,13 +1,15 @@
 /**
- * EE Research Studio — Google Sheets bridge (v2)
+ * EE Research Studio — Google Sheets bridge (v3)
  * -------------------------------------------------------
  * Paste this entire file into the Apps Script editor (Extensions > Apps Script)
- * of the Google Sheet you want responses saved to.
+ * of the Google Sheet you want responses saved to. This REPLACES the entire
+ * previous file content — select all, delete, paste this in.
  *
- * This version uses three tabs (auto-created on first run if missing):
+ * This version uses FOUR tabs (auto-created on first run if missing):
  *   Roster     | StudentID | StudentName |
  *   Students   | StudentID | PinHash | FailedAttempts | Locked | UpdatedAt |
  *   Responses  | Timestamp | StudentID | Day | FormID | DataJSON |
+ *   Feedback   | Timestamp | StudentID | Day | FormID | Comment | Score |   <- NEW
  *
  * ONE-TIME SETUP YOU MUST DO BEFORE STUDENTS USE THE SITE:
  *   1. Fill the "Roster" tab with all 21 students' StudentID (학번) + StudentName.
@@ -30,6 +32,7 @@ function getSheet_(name, headers) {
 function getRosterSheet_()    { return getSheet_("Roster",    ["StudentID", "StudentName"]); }
 function getStudentsSheet_()  { return getSheet_("Students",  ["StudentID", "PinHash", "FailedAttempts", "Locked", "UpdatedAt"]); }
 function getResponsesSheet_() { return getSheet_("Responses", ["Timestamp", "StudentID", "Day", "FormID", "DataJSON"]); }
+function getFeedbackSheet_()  { return getSheet_("Feedback",  ["Timestamp", "StudentID", "Day", "FormID", "Comment", "Score"]); }
 
 function hashPin_(id, pin) {
   const raw = Utilities.computeDigest(Utilities.DigestAlgorithm.SHA_256, id + ":" + pin + ":ee-studio-salt");
@@ -143,11 +146,47 @@ function doPost(e) {
 
   if (action === "teacher_view") {
     if (!checkTeacherPass_(body.teacherPass)) return json_({ ok: false, message: "교사 암호가 올바르지 않습니다." });
+
     const rows = getResponsesSheet_().getDataRange().getValues();
     const results = rows.slice(1)
       .filter(r => String(r[1]) === String(body.studentId))
       .map(r => ({ timestamp: r[0], day: r[2], formId: r[3], data: JSON.parse(r[4]) }));
+
+    // NEW: attach any existing teacher feedback (comment/score) for each response
+    const feedbackRows = getFeedbackSheet_().getDataRange().getValues();
+    results.forEach(r => {
+      for (let i = feedbackRows.length - 1; i >= 1; i--) {
+        const [ , fId, fDay, fFormId, comment, score ] = feedbackRows[i];
+        if (String(fId) === String(body.studentId) && fDay === r.day && fFormId === r.formId) {
+          r.comment = comment;
+          r.score = score;
+          break;
+        }
+      }
+    });
+
     return json_({ ok: true, results });
+  }
+
+  // NEW: teacher saves/updates a comment + score for one student's response
+  if (action === "teacher_save_feedback") {
+    if (!checkTeacherPass_(body.teacherPass)) return json_({ ok: false, message: "교사 암호가 올바르지 않습니다." });
+
+    const sheet = getFeedbackSheet_();
+    const rows = sheet.getDataRange().getValues();
+    let targetRow = -1;
+    for (let i = rows.length - 1; i >= 1; i--) {
+      const [ , rId, rDay, rFormId ] = rows[i];
+      if (String(rId) === String(body.studentId) && rDay === body.day && rFormId === body.formId) {
+        targetRow = i + 1;
+        break;
+      }
+    }
+    const rowValues = [new Date(), body.studentId, body.day, body.formId, body.comment || "", body.score || ""];
+    if (targetRow > 0) sheet.getRange(targetRow, 1, 1, 6).setValues([rowValues]);
+    else sheet.appendRow(rowValues);
+
+    return json_({ ok: true });
   }
 
   return json_({ ok: false, message: "unknown action" });
