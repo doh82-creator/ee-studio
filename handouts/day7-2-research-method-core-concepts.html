@@ -1,0 +1,519 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>EE 연구방법 설계: 꼭 알아야 할 10가지</title>
+  <style>
+    :root {
+      --navy: #0848a0;
+      --navy-deep: #16355f;
+      --cyan: #17a8d5;
+      --cyan-dark: #087fae;
+      --pale: #eef6fb;
+      --pale-2: #f7fbfd;
+      --page-bg: #f2f6fb;
+      --line: #cddde9;
+      --text: #16233a;
+      --muted: #58758f;
+      --white: #ffffff;
+      --card-extra: 0px;
+      --term-extra: 0px;
+    }
+
+    * { box-sizing: border-box; }
+
+    html, body {
+      margin: 0;
+      min-height: 100%;
+      background: var(--page-bg);
+      color: var(--text);
+      font-family: -apple-system, BlinkMacSystemFont, "Noto Sans KR", "Malgun Gothic",
+                   "Apple SD Gothic Neo", Arial, sans-serif;
+      word-break: keep-all;
+      overflow-wrap: break-word;
+    }
+
+    .screen-bar {
+      height: 34px;
+      padding: 0 18px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      background: var(--navy);
+      color: white;
+      font-size: 11px;
+      font-weight: 700;
+    }
+
+    .screen-bar button {
+      border: 1px solid rgba(255,255,255,.58);
+      border-radius: 4px;
+      padding: 4px 10px;
+      background: rgba(255,255,255,.08);
+      color: white;
+      font: inherit;
+      cursor: pointer;
+    }
+
+    .sheet {
+      position: relative;
+      width: 210mm;
+      height: 297mm;
+      margin: 24px auto 36px;
+      padding: 12.5mm 14mm 9mm;
+      overflow: hidden;
+      background: var(--white);
+      border: 1px solid #d6e1eb;
+      box-shadow: 0 6px 24px rgba(28, 57, 92, .10);
+    }
+
+    .page-mark {
+      position: absolute;
+      top: 11.8mm;
+      right: 14mm;
+      color: var(--navy);
+      font-size: 39px;
+      line-height: 1;
+      font-weight: 900;
+    }
+
+    .page-mark small {
+      margin-left: 3px;
+      color: var(--muted);
+      font-size: 9px;
+      vertical-align: 5px;
+      letter-spacing: .08em;
+    }
+
+    .eyebrow {
+      margin-bottom: 5px;
+      color: var(--cyan-dark);
+      font-size: 8.4px;
+      font-weight: 900;
+      letter-spacing: .23em;
+      text-transform: uppercase;
+    }
+
+    h1 {
+      width: calc(100% - 32mm);
+      margin: 0;
+      color: var(--navy);
+      font-size: 28px;
+      line-height: 1.16;
+      font-weight: 900;
+      letter-spacing: -.045em;
+    }
+
+    h1 .en {
+      display: block;
+      margin-top: 4px;
+      color: var(--muted);
+      font-size: 10.5px;
+      line-height: 1.35;
+      font-weight: 700;
+      letter-spacing: .01em;
+    }
+
+    .meta {
+      margin-top: 7px;
+      padding-bottom: 8px;
+      border-bottom: 1px solid var(--line);
+      color: var(--muted);
+      font-size: 9.4px;
+      font-weight: 650;
+    }
+
+    .lead {
+      margin: 10px 0 16px;
+      padding: 9px 12px;
+      background: linear-gradient(90deg, #f0f8fc, #e8f3f9);
+      border-left: 3px solid var(--cyan);
+      color: #28445f;
+      font-size: 10.4px;
+      line-height: 1.55;
+    }
+
+    .lead strong { color: var(--navy-deep); }
+
+    .section-title {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin: 0 0 6px;
+      color: var(--cyan-dark);
+      font-size: 10.7px;
+      line-height: 1.2;
+      font-weight: 900;
+      letter-spacing: .08em;
+    }
+
+    .section-title::after {
+      content: "";
+      height: 1px;
+      flex: 1;
+      background: var(--line);
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      table-layout: fixed;
+    }
+
+    .concept-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 8px 9px;
+    }
+
+    .concept-card {
+      position: relative;
+      min-height: 60px;
+      padding: calc(8px + var(--card-extra)) 10px calc(8px + var(--card-extra)) 46px;
+      background: #f2f7fb;
+      border: 1px solid #d3e2ec;
+      border-left: 4px solid var(--navy);
+      border-radius: 4px;
+      box-shadow: 0 1px 0 rgba(8, 72, 160, .04);
+    }
+
+    .concept-number {
+      position: absolute;
+      top: 9px;
+      left: 10px;
+      width: 26px;
+      height: 26px;
+      display: grid;
+      place-items: center;
+      border-radius: 50%;
+      background: var(--navy);
+      color: white;
+      font-size: 8.8px;
+      line-height: 1;
+      font-weight: 900;
+    }
+
+    .concept-card h2 {
+      margin: 0 0 3px;
+      color: var(--navy-deep);
+      font-size: 10.2px;
+      line-height: 1.35;
+      font-weight: 900;
+    }
+
+    .concept-card p {
+      margin: 0;
+      color: #334d64;
+      font-size: 9.15px;
+      line-height: 1.44;
+      font-weight: 520;
+    }
+
+    .distinction-section { margin-top: 18px; }
+
+    .distinction-intro {
+      margin: 0 0 6px;
+      color: #3d5871;
+      font-size: 9.25px;
+      line-height: 1.45;
+    }
+
+    .term-table col:nth-child(1) { width: 25%; }
+    .term-table col:nth-child(2) { width: 31%; }
+    .term-table col:nth-child(3) { width: 44%; }
+
+    .term-table th,
+    .term-table td {
+      padding: calc(5.5px + var(--term-extra)) 8px;
+      border: 1px solid #d5e3ec;
+      vertical-align: middle;
+    }
+
+    .term-table th {
+      background: #dceef7;
+      color: var(--navy);
+      font-size: 10.4px;
+      line-height: 1.3;
+      text-align: left;
+      font-weight: 900;
+    }
+
+    .term-table th .ko {
+      display: block;
+      margin-top: 2px;
+      color: var(--muted);
+      font-size: 8.7px;
+      font-weight: 800;
+    }
+
+    .term-table td {
+      background: #ffffff;
+      color: #2f485f;
+      font-size: 8.85px;
+      line-height: 1.43;
+      font-weight: 520;
+    }
+
+    .term-table .question-cell {
+      background: #f3f8fb;
+      color: var(--cyan-dark);
+      font-size: 8.9px;
+      line-height: 1.42;
+      font-weight: 900;
+    }
+
+    .examples-title { margin-top: 18px; }
+
+    .example-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 8px;
+    }
+
+    .example-card {
+      padding: 8px 9px;
+      background: #f5fafc;
+      border: 1px solid #cfdfeb;
+      border-top: 3px solid var(--cyan);
+    }
+
+    .example-card.science { border-top-color: var(--navy); }
+
+    .example-card h2 {
+      margin: 0 0 4px;
+      color: var(--navy);
+      font-size: 10.7px;
+      line-height: 1.35;
+      font-weight: 900;
+    }
+
+    .rq {
+      margin: 0 0 5px;
+      padding: 4px 6px;
+      background: #e7f3f9;
+      color: #284761;
+      font-size: 9px;
+      line-height: 1.38;
+    }
+
+    .rq strong { color: var(--cyan-dark); }
+
+    .example-card dl { margin: 0; }
+
+    .example-card .example-row {
+      display: grid;
+      grid-template-columns: 86px 1fr;
+      gap: 5px;
+      padding: 3px 0;
+      border-bottom: 1px dotted #cfdee8;
+    }
+
+    .example-card .example-row:last-child {
+      padding-bottom: 0;
+      border-bottom: 0;
+    }
+
+    .example-card dt {
+      color: var(--navy-deep);
+      font-size: 8.75px;
+      line-height: 1.38;
+      font-weight: 900;
+    }
+
+    .example-card dd {
+      margin: 0;
+      color: #365168;
+      font-size: 8.75px;
+      line-height: 1.42;
+    }
+
+    footer {
+      position: absolute;
+      right: 14mm;
+      bottom: 5.5mm;
+      left: 14mm;
+      display: flex;
+      justify-content: space-between;
+      padding-top: 5px;
+      border-top: 1px solid #d7e2eb;
+      color: #64809a;
+      font-size: 6.8px;
+      font-weight: 700;
+      letter-spacing: .04em;
+      text-transform: uppercase;
+    }
+
+    @page { size: A4 portrait; margin: 0; }
+
+    @media print {
+      html, body { background: white; }
+      .screen-bar { display: none; }
+      .sheet { margin: 0; border: 0; box-shadow: none; }
+    }
+  </style>
+</head>
+<body>
+  <div class="screen-bar">
+    <span>EE Research Studio · DP1 Extended Essay Preparation &nbsp;·&nbsp; <a href="../index.html" style="color:#BFE0F2;">Home</a> / <a href="../days/day7.html" style="color:#BFE0F2;">Day 7</a></span>
+    <button type="button" onclick="window.print()">A4 인쇄 / PDF 저장</button>
+  </div>
+
+  <main class="sheet">
+    <div class="page-mark">1<small>/ METHODS</small></div>
+
+    <header>
+      <div class="eyebrow">EE Research Studio · Research Methods</div>
+      <h1>
+        EE 연구방법 설계: 꼭 알아야 할 10가지
+        <span class="en">Ten Essential Ideas for Designing Your Research</span>
+      </h1>
+      <div class="meta">DP1 EE 입문 교육 · Research Methods | 이름: ______________________________</div>
+    </header>
+
+    <section class="lead">
+      좋은 연구방법은 단순히 설문·면담·실험 중 하나를 고르는 것이 아니다.
+      <strong>연구 질문에 답하기 위해 어떤 근거가 필요하며, 그 근거를 어떻게 수집하고 분석할 것인지</strong>를 논리적으로 설계해야 한다.
+    </section>
+
+    <div class="section-title">연구방법을 설계할 때 확인해야 할 10가지</div>
+
+    <section class="concept-grid" aria-label="연구방법 설계의 열 가지 핵심 개념">
+      <article class="concept-card">
+        <div class="concept-number">01</div>
+        <h2>연구 질문과 방법의 관계</h2>
+        <p>연구방법은 연구 질문에 따라 결정하며, 방법을 먼저 정한 뒤 질문을 억지로 맞추지 않도록 함.</p>
+      </article>
+      <article class="concept-card">
+        <div class="concept-number">02</div>
+        <h2>방법론과 연구방법</h2>
+        <p>연구 전체의 전략과 관점인 방법론과 자료를 수집·분석하는 구체적인 절차인 연구방법을 구분함.</p>
+      </article>
+      <article class="concept-card">
+        <div class="concept-number">03</div>
+        <h2>분석 틀</h2>
+        <p>이론·모형·핵심 개념을 자료에서 무엇을 찾고 어떻게 해석할 것인지 결정하는 기준으로 활용함.</p>
+      </article>
+      <article class="concept-card">
+        <div class="concept-number">04</div>
+        <h2>1차 자료와 2차 자료</h2>
+        <p>직접 수집하거나 분석하는 원자료와 기존 연구자가 해석한 자료의 차이를 이해하고, 과목별 의미를 확인함.</p>
+      </article>
+      <article class="concept-card">
+        <div class="concept-number">05</div>
+        <h2>자료 선정</h2>
+        <p>자료의 신뢰성·학술성·관련성을 검토하고, 어떤 자료를 포함하거나 제외했는지 그 기준을 설명함.</p>
+      </article>
+      <article class="concept-card">
+        <div class="concept-number">06</div>
+        <h2>분석 방법</h2>
+        <p>무엇을 수집할지만 제시하지 않고, 자료를 어떻게 비교·분류·계산·해석할 것인지 구체적으로 계획함.</p>
+      </article>
+      <article class="concept-card">
+        <div class="concept-number">07</div>
+        <h2>타당도와 신뢰도</h2>
+        <p>선택한 방법으로 실제 연구 질문에 답할 수 있는지, 같은 절차를 반복할 수 있는지를 검토함.</p>
+      </article>
+      <article class="concept-card">
+        <div class="concept-number">08</div>
+        <h2>연구 윤리</h2>
+        <p>연구 참여자의 동의와 익명성, 개인정보, 미성년자 참여, 민감한 정보, 표절과 AI 사용 문제를 점검함.</p>
+      </article>
+      <article class="concept-card">
+        <div class="concept-number">09</div>
+        <h2>연구의 한계</h2>
+        <p>표본·자료·측정·해석의 제약이 결론의 신뢰성과 결론을 적용할 수 있는 범위에 미치는 영향을 평가함.</p>
+      </article>
+      <article class="concept-card">
+        <div class="concept-number">10</div>
+        <h2>실행 가능성</h2>
+        <p>4,000단어, 연구 기간, 학교 시설, 자료 접근성, 자신의 교과 지식 안에서 수행 가능한지 판단함.</p>
+      </article>
+    </section>
+
+    <section class="distinction-section">
+      <div class="section-title">비슷해 보이지만 서로 다른 네 가지 개념</div>
+      <p class="distinction-intro">각 개념이 답하는 질문을 기준으로 구분하면 연구계획을 훨씬 정확하게 설명할 수 있다.</p>
+
+      <table class="term-table" aria-label="방법론, 연구방법, 분석 틀, 도구의 구분">
+        <colgroup><col><col><col></colgroup>
+        <tbody>
+          <tr>
+            <th scope="row">Methodology<span class="ko">방법론</span></th>
+            <td class="question-cell">“연구 전체를 어떤 학문적 관점과 전략으로 이끌 것인가?”</td>
+            <td>연구 질문, 자료의 성격, 분석의 논리와 결론에 이르는 전체 방향을 결정한다.</td>
+          </tr>
+          <tr>
+            <th scope="row">Research methods<span class="ko">연구방법</span></th>
+            <td class="question-cell">“자료를 어떤 절차로 수집하고 분석할 것인가?”</td>
+            <td>근접 읽기, 비교 분석, 설문, 면담, 통제 실험, 통계 분석처럼 연구를 실제로 수행하는 방법이다.</td>
+          </tr>
+          <tr>
+            <th scope="row">Analytical framework<span class="ko">분석 틀</span></th>
+            <td class="question-cell">“자료에서 무엇을 찾고, 어떤 기준으로 의미를 부여할 것인가?”</td>
+            <td>이론·모형·핵심 개념을 분석 범주로 바꾸어 자료를 분류하고 해석하는 기준을 제공한다.</td>
+          </tr>
+          <tr>
+            <th scope="row">Tools<span class="ko">도구</span></th>
+            <td class="question-cell">“선택한 방법을 실행하고 기록하기 위해 무엇을 사용할 것인가?”</td>
+            <td>실험기구, 코딩표, 스프레드시트, 통계 프로그램 등이며, 도구 자체가 연구방법이 되는 것은 아니다.</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <div class="section-title examples-title">예시</div>
+
+      <div class="example-grid" id="exampleGrid">
+        <article class="example-card">
+          <h2>예시 1 · 문학 EE</h2>
+          <p class="rq"><strong>연구 질문</strong> · Klara and the Sun은 인간과 인공지능의 경계를 어떻게 표현하는가?</p>
+          <dl>
+            <div class="example-row"><dt>Methodology</dt><dd>작품의 의미를 언어와 맥락을 통해 해석하는 질적·해석적 문학 연구</dd></div>
+            <div class="example-row"><dt>Research methods</dt><dd>관련 장면을 선정한 뒤 인물 묘사·서술 방식·언어 표현을 근접 읽기하고 장면별로 비교 분석</dd></div>
+            <div class="example-row"><dt>Analytical framework</dt><dd>포스트휴머니즘을 적용하여 인간성, 주체성, 감정, 인간과 인공지능의 경계를 분석 범주로 설정</dd></div>
+            <div class="example-row"><dt>Tools</dt><dd>인용문·장면·분석 범주·해석 내용을 정리하는 코딩표와 스프레드시트</dd></div>
+          </dl>
+        </article>
+
+        <article class="example-card science">
+          <h2>예시 2 · 자연과학 EE</h2>
+          <p class="rq"><strong>연구 질문</strong> · 반응 온도는 감자 조직의 카탈레이스 활성에 어떤 영향을 미치는가?</p>
+          <dl>
+            <div class="example-row"><dt>Methodology</dt><dd>가설을 세우고 측정 가능한 자료로 검증하는 양적·실험적 과학 연구</dd></div>
+            <div class="example-row"><dt>Research methods</dt><dd>온도를 단계별로 조절하고 일정 시간 동안 발생한 산소량을 측정하며, 통제변인을 유지해 반복 실험 후 평균을 비교</dd></div>
+            <div class="example-row"><dt>Analytical framework</dt><dd>효소 반응속도와 단백질 변성 개념을 바탕으로 온도 변화와 카탈레이스 활성의 관계를 해석</dd></div>
+            <div class="example-row"><dt>Tools</dt><dd>항온수조, 온도계, 기체 주사기, 초시계, 결과를 계산·그래프화하는 스프레드시트</dd></div>
+          </dl>
+        </article>
+      </div>
+    </section>
+
+    <footer>
+      <span>EE Research Studio</span>
+      <span>Source: IB Extended Essay Guide · First Assessment 2027</span>
+    </footer>
+  </main>
+
+  <script>
+    function fillA4Page() {
+      const root = document.documentElement;
+      root.style.setProperty('--card-extra', '0px');
+      root.style.setProperty('--term-extra', '0px');
+
+      const footer = document.querySelector('footer');
+      const examples = document.getElementById('exampleGrid');
+      if (!footer || !examples) return;
+
+      let gap = footer.getBoundingClientRect().top - examples.getBoundingClientRect().bottom - 8;
+      if (gap > 6) {
+        const extra = Math.min(6.2, gap / 28);
+        root.style.setProperty('--card-extra', extra.toFixed(2) + 'px');
+        root.style.setProperty('--term-extra', extra.toFixed(2) + 'px');
+      }
+    }
+
+    window.addEventListener('load', fillA4Page);
+    window.addEventListener('beforeprint', fillA4Page);
+  </script>
+</body>
+</html>
