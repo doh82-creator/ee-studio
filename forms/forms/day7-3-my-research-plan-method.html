@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>My Research Plan: Method</title>
+<link rel="stylesheet" href="../assets/form.css">
+<style>
+  .field-label{font-size:12.5px; color:var(--ink-soft); margin:20px 0 6px; font-weight:700;}
+  .field-input{width:100%; padding:8px 10px; border:1px solid var(--line-strong); border-radius:4px; font-size:13.5px; font-family:inherit; margin-bottom:6px;}
+  .item-block{border:1px solid var(--line); border-radius:8px; padding:16px 18px; margin-bottom:14px;}
+  .item-num{display:inline-flex; align-items:center; justify-content:center; width:24px; height:24px; background:var(--ink); color:#fff; border-radius:50%; font-size:12px; font-weight:700; margin-right:8px; flex-shrink:0;}
+  .item-title{font-weight:700; color:var(--ink); font-size:14px; display:flex; align-items:center;}
+  .eval-item{display:flex; align-items:flex-start; gap:10px; padding:9px 0; border-bottom:1px solid var(--line);}
+  .eval-item input{margin-top:3px;}
+  .eval-item label{font-size:13px; line-height:1.6;}
+</style>
+</head>
+<body>
+  <div class="site-topbar">
+    <div class="brand">EE Research Studio</div>
+    <div><a href="../index.html">Home</a> &nbsp;/&nbsp; <a href="../days/day7.html">Day 7</a> &nbsp;/&nbsp; My Research Plan: Method</div>
+  </div>
+
+  <div class="wrap">
+  <div class="sheet">
+    <div class="code-box" style="margin-bottom:28px;">
+      <label>학번</label>
+      <input type="text" id="studentId" placeholder="예: 20301" style="width:80px;">
+      <label>비밀번호(4자리)</label>
+      <input type="password" id="studentPin" maxlength="4" placeholder="••••" style="width:60px;">
+      <button id="verifyBtn">확인</button>
+      <span id="statusMsg" style="font-size:11.5px;"></span>
+    </div>
+
+    <span class="hw-tag">연구방법 설계표</span>
+    <h1>My Research Plan: Method</h1>
+    <div class="sub">최종 연구계획서에 들어가기 전, 연구방법을 한 장으로 정리합니다</div>
+
+    <div class="lede">
+      아래 14개 항목을 순서대로 채우면 연구방법(Methodology) 설계가 끝납니다. 다 쓴 뒤에는
+      맨 아래 자기/동료 평가 질문 5개로 스스로 점검해보세요.
+    </div>
+
+    <div class="item-block">
+      <div class="item-title"><span class="item-num">1</span>EE 과목 및 경로</div>
+      <div class="field-label">과목명 및 경로 (교과 중심 / 학제적)</div>
+      <textarea id="q1_subjectApproach" rows="2" class="field-input"></textarea>
+    </div>
+
+    <div class="item-block">
+      <div class="item-title"><span class="item-num">2</span>잠정 연구 질문</div>
+      <div class="field-label">Day 6에서 정한 연구질문을 다시 적어보세요</div>
+      <textarea id="q2_researchQuestion" rows="2" class="field-input"></textarea>
+    </div>
+
+    <div class="item-block">
+      <div class="item-title"><span class="item-num">3</span>연구 질문에 답하기 위해 필요한 근거</div>
+      <textarea id="q3_evidenceNeeded" rows="2" class="field-input"></textarea>
+    </div>
+
+    <div class="item-block">
+      <div class="item-title"><span class="item-num">4</span>사용할 1차·2차 자료</div>
+      <textarea id="q4_sources" rows="2" class="field-input" placeholder="1차 자료: ... / 2차 자료: ..."></textarea>
+    </div>
+
+    <div class="item-block">
+      <div class="item-title"><span class="item-num">5</span>자료 선정 및 제외 기준</div>
+      <textarea id="q5_selectionCriteria" rows="2" class="field-input"></textarea>
+    </div>
+
+    <div class="item-block">
+      <div class="item-title"><span class="item-num">6</span>자료 수집 방법</div>
+      <textarea id="q6_collectionMethod" rows="2" class="field-input"></textarea>
+    </div>
+
+    <div class="item-block">
+      <div class="item-title"><span class="item-num">7</span>자료 분석 방법</div>
+      <textarea id="q7_analysisMethod" rows="2" class="field-input"></textarea>
+    </div>
+
+    <div class="item-block">
+      <div class="item-title"><span class="item-num">8</span>적용할 이론·개념·분석 틀</div>
+      <textarea id="q8_theoryFramework" rows="2" class="field-input"></textarea>
+    </div>
+
+    <div class="item-block">
+      <div class="item-title"><span class="item-num">9</span>이 방법이 연구 질문에 적합한 이유</div>
+      <textarea id="q9_whyAppropriate" rows="2" class="field-input"></textarea>
+    </div>
+
+    <div class="item-block">
+      <div class="item-title"><span class="item-num">10</span>예상되는 연구 윤리 문제</div>
+      <textarea id="q10_ethicsIssues" rows="2" class="field-input"></textarea>
+    </div>
+
+    <div class="item-block">
+      <div class="item-title"><span class="item-num">11</span>예상되는 한계</div>
+      <textarea id="q11_limitations" rows="2" class="field-input"></textarea>
+    </div>
+
+    <div class="item-block">
+      <div class="item-title"><span class="item-num">12</span>자료 접근성과 기간을 고려한 실행 가능성</div>
+      <textarea id="q12_feasibility" rows="2" class="field-input"></textarea>
+    </div>
+
+    <div class="item-block">
+      <div class="item-title"><span class="item-num">13</span>예비 조사 또는 파일럿 결과</div>
+      <textarea id="q13_pilotResults" rows="2" class="field-input" placeholder="아직 없다면 '해당 없음'"></textarea>
+    </div>
+
+    <div class="item-block">
+      <div class="item-title"><span class="item-num">14</span>파일럿 이후 수정한 사항</div>
+      <textarea id="q14_revisionsAfterPilot" rows="2" class="field-input" placeholder="아직 없다면 '해당 없음'"></textarea>
+    </div>
+
+    <div class="section-title" style="font-size:14px; font-weight:700; color:var(--ink); margin:30px 0 14px;">자기 점검 / 동료평가</div>
+    <p style="font-size:13px; color:var(--ink-soft); margin:0 0 10px;">
+      스스로 점검하거나, 조원과 서로 바꿔 읽고 답해보세요. 해당하면 체크하세요.
+    </p>
+
+    <div class="eval-item"><input type="checkbox" id="ev1"><label for="ev1">이 방법으로 실제로 연구 질문에 답할 수 있는가?</label></div>
+    <div class="eval-item"><input type="checkbox" id="ev2"><label for="ev2">선택한 EE 과목의 학문적 연구방식에 맞는가?</label></div>
+    <div class="eval-item"><input type="checkbox" id="ev3"><label for="ev3">필요한 자료를 실제로 구할 수 있는가?</label></div>
+    <div class="eval-item"><input type="checkbox" id="ev4"><label for="ev4">자료를 단순히 요약하지 않고 분석할 수 있는가?</label></div>
+    <div class="eval-item"><input type="checkbox" id="ev5"><label for="ev5">4,000단어와 주어진 기간 안에서 윤리적으로 실행 가능한가?</label></div>
+
+    <div class="field-label">평가자 이름 (자기평가라면 본인 이름, 동료평가라면 평가한 조원 이름)</div>
+    <input type="text" id="evaluatorName" class="field-input">
+
+    <div class="field-label">보완이 필요하다고 생각하는 부분</div>
+    <textarea id="evalComment" rows="3" class="field-input"></textarea>
+
+    <div style="margin-top:24px; display:flex; align-items:center; gap:12px;">
+      <button id="saveBtn" style="padding:10px 20px; background:var(--accent); color:#fff; border:none; border-radius:5px; font-weight:700; font-size:14px; cursor:pointer;">저장하기</button>
+      <span id="saveStatus" style="font-size:12.5px;"></span>
+    </div>
+  </div>
+  </div>
+
+  <script src="../assets/app.js"></script>
+  <script>
+    const DAY = 7;
+    const FORM_ID = "day7-3-my-research-plan-method";
+    const FIELD_IDS = [
+      "q1_subjectApproach","q2_researchQuestion","q3_evidenceNeeded","q4_sources",
+      "q5_selectionCriteria","q6_collectionMethod","q7_analysisMethod","q8_theoryFramework",
+      "q9_whyAppropriate","q10_ethicsIssues","q11_limitations","q12_feasibility",
+      "q13_pilotResults","q14_revisionsAfterPilot",
+      "ev1","ev2","ev3","ev4","ev5","evaluatorName","evalComment"
+    ];
+
+    function collectData(){
+      const data = {};
+      FIELD_IDS.forEach(id => {
+        const el = document.getElementById(id);
+        data[id] = el.type === "checkbox" ? el.checked : el.value;
+      });
+      return data;
+    }
+    function populateData(data){
+      if(!data) return;
+      FIELD_IDS.forEach(id => {
+        const el = document.getElementById(id);
+        if(!el) return;
+        if(el.type === "checkbox") el.checked = !!data[id];
+        else el.value = data[id] || "";
+      });
+    }
+
+    const savedAuth = ee_getSavedAuth();
+    if(savedAuth.id) document.getElementById("studentId").value = savedAuth.id;
+    if(savedAuth.pin) document.getElementById("studentPin").value = savedAuth.pin;
+
+    async function doVerifyAndLoad(){
+      const id = document.getElementById("studentId").value.trim();
+      const pin = document.getElementById("studentPin").value.trim();
+      if(!id || !pin){ ee_setStatus(document.getElementById("statusMsg"), "학번과 비밀번호를 입력해주세요.", true); return; }
+      const result = await ee_verify(id, pin, document.getElementById("statusMsg"));
+      if(result.ok){
+        const data = await ee_loadResponse(DAY, FORM_ID, document.getElementById("statusMsg"));
+        if(data) populateData(data);
+      }
+    }
+    document.getElementById("verifyBtn").addEventListener("click", doVerifyAndLoad);
+    if(savedAuth.id && savedAuth.pin) doVerifyAndLoad();
+
+    document.getElementById("saveBtn").addEventListener("click", async ()=>{
+      const { id, pin } = ee_getSavedAuth();
+      if(!id || !pin){ ee_setStatus(document.getElementById("saveStatus"), "먼저 위에서 학번/비밀번호 확인을 눌러주세요.", true); return; }
+      const data = collectData();
+      await ee_saveResponse(DAY, FORM_ID, data, document.getElementById("saveStatus"));
+    });
+  </script>
+</body>
+</html>
